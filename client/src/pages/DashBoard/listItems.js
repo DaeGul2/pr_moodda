@@ -9,10 +9,18 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
-import {Link} from 'react-router-dom';
+import SettingsIcon from '@mui/icons-material/Settings';
+import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
+import { Link } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
+    <ListItemButton>
+      <ListItemIcon>
+        <AutoAwesomeMosaicIcon/>
+      </ListItemIcon>
+      <Link to="/dashboard"><ListItemText primary="대쉬보드" /></Link>
+    </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <AssignmentIndIcon />
@@ -42,6 +50,12 @@ export const mainListItems = (
         <MonetizationOnIcon />
       </ListItemIcon>
       <Link to="/products"><ListItemText primary="포인트 상점" /></Link>
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <SettingsIcon />
+      </ListItemIcon>
+      <Link to="/admin"><ListItemText primary="관리자 페이지" /></Link>
     </ListItemButton>
   </React.Fragment>
 );

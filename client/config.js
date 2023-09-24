@@ -1,1 +1,0 @@
-HOST_PORT = 'http://localhost:8080';
