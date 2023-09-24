@@ -2,12 +2,12 @@ const Player = require('../models/playerModel'); // Post 모델을 가져옵니�
 
 exports.getAllPlayers = async (req, res) => {
     try {
-        const { page, perpage, category } = req.query; // 쿼리 파라미터에서 page와 perpage를 추출
+        const { page, perpage,updown } = req.query; // 쿼리 파라미터에서 page와 perpage를 추출
         console.log(req.query);
         const currentPage = parseInt(page) || 1; // 현재 페이지 (기본값: 1)
         const itemsPerPage = parseInt(perpage) || 10; // 페이지당 항목 수 (기본값: 10)
-        const type = category||'player_name';
-        console.log(type);
+        const Updown = parseInt(updown)||1;
+   
 
         const skip = (currentPage - 1) * itemsPerPage; // 건너뛸 항목 수 계산
 
@@ -16,7 +16,7 @@ exports.getAllPlayers = async (req, res) => {
 
         // 현재 페이지의 게시물을 가져옴
         const players = await Player.find()
-            .sort({ type: -1 })
+            .sort({ player_name: Updown })
             .skip(skip)
             .limit(itemsPerPage);
 
