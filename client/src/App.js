@@ -8,9 +8,7 @@ import SignUp from './pages/SignUp'
 import {
   BrowserRouter as Router,
   Routes,
-  Route,
-  Link,
-  useNavigate
+  Route
 } from "react-router-dom";
 
 
