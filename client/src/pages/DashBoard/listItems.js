@@ -3,16 +3,23 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
-import DashboardIcon from '@mui/icons-material/Dashboard';
+import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import {Link} from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
+    <ListItemButton>
+      <ListItemIcon>
+        <AssignmentIndIcon />
+      </ListItemIcon>
+      <Link to="/deposits"><ListItemText primary="내 정보" /></Link>
+    </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <ShoppingCartIcon />
@@ -33,9 +40,9 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <LayersIcon />
+        <MonetizationOnIcon />
       </ListItemIcon>
-      <Link to="/title"><ListItemText primary="타이틀(title)" /></Link>
+      <Link to="/products"><ListItemText primary="포인트 상점" /></Link>
     </ListItemButton>
   </React.Fragment>
 );
