@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-// 게시판 글(Post) 모델의 스키마 정의
-const postSchema = new mongoose.Schema({
+// 선수 모델의 스키마 정의
+const playerSchema = new mongoose.Schema({
     player_name: {
         type: String,
         required: true,
@@ -25,6 +25,6 @@ const postSchema = new mongoose.Schema({
 });
 
 // Post 모델 생성
-const Player = mongoose.model('Player', postSchema,'players');
+const Player = mongoose.model('Player', playerSchema,'players');
 
 module.exports = Player; 
