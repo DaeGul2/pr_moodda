@@ -15,7 +15,7 @@ function Admin() {
     const [players, setPlayers] = useState([]);
     const [currentPlayerPage, setCurrentPlayerPage] = useState(1);
     useEffect(() => {
-        getPlayers(1, 10, -1).then((res) => {
+        getPlayers(currentPlayerPage, 10, -1).then((res) => {
             setPlayers(res.players);
         });
     }, [])
