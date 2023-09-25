@@ -8,6 +8,7 @@ const session = require('express-session');
 /**------ Routers-------- */
 
 const playerRouter = require('./routers/playerRouter');
+const gameRouter = require('./routers/gameRouter');
 
 
 /**-------Routers End-----*/
@@ -41,6 +42,7 @@ app.use(express.json());
 
 /**---- attaching routers to App---- */
 app.use('/api/players',playerRouter);
+app.use('/api/games',gameRouter);
 
 
 /**--------------------------------- */

@@ -1,9 +1,32 @@
 const mongoose = require('mongoose');
-const { playerSchema } = require('/playerModel');
+// const { playerSchema } = require('./playerModel');
+
+const playerSchema = new mongoose.Schema({
+    player_name: {
+        type: String,
+        required: true,
+    },
+    player_uni: {
+        type: String,
+        required: true,
+    },
+     player_tear: {
+        type: String,
+        required: true,
+    },
+     player_tpz: {
+        type: String,
+        required: true,
+    },
+     sex: {
+        type: String,
+        required: true,
+    },
+});
 
 const subGame = new mongoose.Schema({
-    home: { playerSchema },
-    away: { playerSchema },
+    home: { type:playerSchema},
+    away: { type:playerSchema},
     result: {
         type: Number,
         default: 0
@@ -27,11 +50,9 @@ const gameSchema = new mongoose.Schema({
 
 
 
-}, {
-    timestamps: true
 });
 
 // Post 모델 생성
-const Game = mongoose.model('Game', gameSchema, 'game');
+const Game = mongoose.model('Game', gameSchema, 'games');
 
 module.exports = Game; 
