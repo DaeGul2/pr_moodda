@@ -12,13 +12,22 @@ function preventDefault(event) {
   }
 
 function Admin() {
+    const [perPage, setPerPage]= useState(10);
     const [players, setPlayers] = useState([]);
+    const [totalPlayerPage, setTotalPlayerPage] = useState(100);
     const [currentPlayerPage, setCurrentPlayerPage] = useState(1);
     useEffect(() => {
-        getPlayers(currentPlayerPage, 10, -1).then((res) => {
+        getPlayers(currentPlayerPage, perPage, -1).then((res) => {
+            setTotalPlayerPage(res.totalPages);
             setPlayers(res.players);
+            if(currentPlayerPage===0){
+                setCurrentPlayerPage(1);
+            }
+            if(currentPlayerPage>totalPlayerPage){
+                setCurrentPlayerPage(totalPlayerPage-1);
+            }
         });
-    }, [])
+    }, [currentPlayerPage])
 
     return (
         <React.Fragment>
@@ -48,8 +57,9 @@ function Admin() {
                 </TableBody>
             </Table>
             <div>
-                <button>이전</button>
-                <button>다음</button>
+                <button onClick={()=>{setCurrentPlayerPage(currentPlayerPage-1)}}>이전</button>
+                {currentPlayerPage}
+                <button onClick={()=>{setCurrentPlayerPage(currentPlayerPage+1)}}>다음</button>
             </div>
             <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
                 See more orders
