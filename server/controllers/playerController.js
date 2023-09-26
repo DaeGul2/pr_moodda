@@ -42,3 +42,24 @@ exports.getEveryPlayers = async (req, res) => {
     }
 };
 
+exports.updatePlayer = async(req,res)=>{
+    try {
+        const { player_id } = req.params; // URL에서 게임 ID를 가져옵니다.
+        const {player_uni, player_tear, player_tpz } = req.body;
+    
+        // 게임 업데이트
+        const updatedPlayer = await Player.findByIdAndUpdate(
+          player_id, // 업데이트할 게임의 ID
+          {player_uni, player_tear, player_tpz },
+          { new: true } // 업데이트된 게임 데이터를 반환하기 위해 new 옵션을 사용합니다.
+        );
+    
+        if (!updatedPlayer) {
+          return res.status(404).json({ error: '플레이어를 찾을 수 없습니다.' });
+        }
+    
+        res.status(200).json(updatedPlayer);
+      } catch (error) {
+        res.status(500).json({ error: '플레이어를 업데이트하는 중에 오류가 발생했습니다.' });
+      }
+}
