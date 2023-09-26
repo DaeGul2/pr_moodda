@@ -22,6 +22,7 @@ const playerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    rate:{type:Number}
 });
 
 const subGame = new mongoose.Schema({
