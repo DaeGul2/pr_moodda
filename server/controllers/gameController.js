@@ -72,4 +72,16 @@ exports.updateGame = async (req, res) => {
     }
 };
 
-
+exports.deleteGame = async (req, res) => {
+    try {
+      const gameId = req.params.gameId;
+      const deletedGame = await Game.findByIdAndDelete(gameId);
+      if (!deletedGame) {
+        return res.status(404).json({ error: '해당 ID의 대전을 찾을 수 없습니다.' });
+      }
+      res.status(204).send();
+    } catch (error) {
+      res.status(500).json({ error: '대전을 삭제하는 중에 오류가 발생했습니다.' });
+    }
+  };
+  
