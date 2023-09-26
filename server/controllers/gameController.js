@@ -1,6 +1,43 @@
 const Game = require('../models/gameModel'); // Post 모델을 가져옵니다.
 
 
+exports.getGames = async (req, res) => {
+    try {
+        const { page, perpage,type } = req.query; // 쿼리 파라미터에서 page와 perpage를 추출
+        const currentPage = parseInt(page) || 1; // 현재 페이지 (기본값: 1)
+        const itemsPerPage = parseInt(perpage) || 10; // 페이지당 항목 수 (기본값: 10)
+        const skip = (currentPage - 1) * itemsPerPage; // 건너뛸 항목 수 계산
+        
+        // 총 게시물 수를 가져옴
+        let totalGames
+        totalGames = await Game.countDocuments();
+        let games;
+        // 현재 페이지의 게시물을 가져옴
+        if (parseInt(type)===1){
+            games = await Game.find({games:{ $elemMatch: { result: 1 } }} )
+            .sort({ 'games.createdAt': -1 })
+            .skip(skip)
+            .limit(itemsPerPage);
+
+        }
+        else{
+            games = await Game.find({games:{ $elemMatch: { result: 0 } }})
+            .sort({ 'games.createdAt': -1 })
+            .skip(skip)
+            .limit(itemsPerPage);
+        }
+        
+
+        res.status(200).json({
+            games,
+            currentPage,
+            totalPages: Math.ceil(totalGames / itemsPerPage),
+        });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ error: '게시물을 조회하는 중에 오류가 발생했습니다.' });
+    }
+};
 
 exports.createGame = async (req, res) => {
     try {
@@ -34,4 +71,5 @@ exports.createGame = async (req, res) => {
       res.status(500).json({ error: '게임을 업데이트하는 중에 오류가 발생했습니다.' });
     }
   };
+  
   

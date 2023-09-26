@@ -30,7 +30,7 @@ const subGame = new mongoose.Schema({
     away: { type:playerSchema},
     result: {
         type: Number,
-        default: 0
+        default: 1 // 0 종료 1 진행중 2 진행 전
     }
 
 }, {
@@ -40,7 +40,7 @@ const subGame = new mongoose.Schema({
 // 선수 모델의 스키마 정의
 const gameSchema = new mongoose.Schema({
     game_type: {
-        type: String,
+        type: String,   
         required: true,
         enum: ['1v1', 'nvm']
     },
