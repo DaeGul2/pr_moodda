@@ -26,7 +26,7 @@ exports.getAllPlayers = async (req, res) => {
             totalPages: Math.ceil(totalPosts / itemsPerPage),
         });
     } catch (error) {
-        res.status(500).json({ error: '게시물을 조회하는 중에 오류가 발생했습니다.' });
+        res.status(500).json({ error: '/getAllPlayers 조회하는 중에 오류가 발생했습니다.' });
     }
 };
 
@@ -38,7 +38,7 @@ exports.getEveryPlayers = async (req, res) => {
            
         res.status(200).json(players);
     } catch (error) {
-        res.status(500).json({ error: '게시물을 조회하는 중에 오류가 발생했습니다.' });
+        res.status(500).json({ error: '/getEveryPlayers 조회하는 중에 오류가 발생했습니다.' });
     }
 };
 
