@@ -9,7 +9,8 @@ const session = require('express-session');
 
 const playerRouter = require('./routers/playerRouter');
 const gameRouter = require('./routers/gameRouter');
-
+const userRouter = require('./routers/userRouter');
+const bettingRouter = require('./routers/bettingRouter');
 
 /**-------Routers End-----*/
 
@@ -43,6 +44,8 @@ app.use(express.json());
 /**---- attaching routers to App---- */
 app.use('/api/players',playerRouter);
 app.use('/api/games',gameRouter);
+app.use('/api/users',userRouter);
+app.use('/api/betting',bettingRouter);
 
 
 /**--------------------------------- */

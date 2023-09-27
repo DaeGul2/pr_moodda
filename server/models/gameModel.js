@@ -30,8 +30,9 @@ const subGame = new mongoose.Schema({
     away: { type:playerSchema},
     result: {
         type: Number,
-        default: 1 // 0 종료 1 진행중 2 진행 전
-    }
+        default: 2 // 0 종료 1 진행중 2 진행 전
+    },
+    win:{type:String,default:'yet', enum:['home','away','yet']}
 
 }, {
     timestamps: true
