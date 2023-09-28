@@ -2,9 +2,9 @@ import { GAMES, HOST_PORT } from '../config';
 import axios from 'axios';
 
 //type  0 종료 1 진행중 2 진행 전
-export const getGames = async (page, perPage, type) => {
+export const getGames = async (page, perPage) => {
     try {
-        const games = await axios.get(`${HOST_PORT}${GAMES}?page=${page}&perPage=${perPage}&type=${type}`);
+        const games = await axios.get(`${HOST_PORT}${GAMES}?page=${page}&perPage=${perPage}`);
         return games;
     }
     catch (e) {

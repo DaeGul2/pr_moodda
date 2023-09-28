@@ -3,7 +3,7 @@ const Game = require('../models/gameModel'); // Post 모델을 가져옵니다.
 
 exports.getGames = async (req, res) => {
     try {
-        const { page, perpage, type } = req.query; // 쿼리 파라미터에서 page와 perpage를 추출
+        const { page, perpage } = req.query; // 쿼리 파라미터에서 page와 perpage를 추출
         const currentPage = parseInt(page) || 1; // 현재 페이지 (기본값: 1)
         const itemsPerPage = parseInt(perpage) || 10; // 페이지당 항목 수 (기본값: 10)
         const skip = (currentPage - 1) * itemsPerPage; // 건너뛸 항목 수 계산
@@ -13,25 +13,29 @@ exports.getGames = async (req, res) => {
         totalGames = await Game.countDocuments();
         let games;
         // 현재 페이지의 게시물을 가져옴
-        if (parseInt(type) === 2) {
-            games = await Game.find({ games: { $elemMatch: { result: 2 } } })
-                .sort({ 'games.createdAt': -1 })
-                .skip(skip)
-                .limit(itemsPerPage);
+        // if (parseInt(type) === 2) {
+        //     games = await Game.find({ games: { $elemMatch: { result: 2 } } })
+        //         .sort({ 'games.createdAt': -1 })
+        //         .skip(skip)
+        //         .limit(itemsPerPage);
 
-        }
-        else if (parseInt(type) === 1) {
-            games = await Game.find({ games: { $elemMatch: { result: 1 } } })
+        // }
+        // else if (parseInt(type) === 1) {
+        //     games = await Game.find({ games: { $elemMatch: { result: 1 } } })
+        //         .sort({ 'games.createdAt': -1 })
+        //         .skip(skip)
+        //         .limit(itemsPerPage);
+        // }
+        // else {
+        //     games = await Game.find({ games: { $elemMatch: { result: 0 } } })
+        //         .sort({ 'games.createdAt': -1 })
+        //         .skip(skip)
+        //         .limit(itemsPerPage);
+        // }
+        games = await Game.find()
                 .sort({ 'games.createdAt': -1 })
                 .skip(skip)
                 .limit(itemsPerPage);
-        }
-        else {
-            games = await Game.find({ games: { $elemMatch: { result: 0 } } })
-                .sort({ 'games.createdAt': -1 })
-                .skip(skip)
-                .limit(itemsPerPage);
-        }
 
 
         res.status(200).json({
