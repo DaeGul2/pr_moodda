@@ -1,9 +1,9 @@
-import { HOST_PORT, GET_PLAYERS } from '../config';
+import { HOST_PORT, PLAYERS } from '../config';
 import axios from 'axios';
 
 export const getPlayers = async (crntPage,perPage,updown) => {
     try {
-        const response = await axios.get(`${HOST_PORT}${GET_PLAYERS}?page=${crntPage}&perpage=${perPage}&updown=${updown}`);
+        const response = await axios.get(`${HOST_PORT}${PLAYERS}?page=${crntPage}&perpage=${perPage}&updown=${updown}`);
         return response.data;
         
     }
@@ -14,7 +14,7 @@ export const getPlayers = async (crntPage,perPage,updown) => {
 
 export const getAllPlayers = async () => {
     try {
-        const response = await axios.get(`${HOST_PORT}${GET_PLAYERS}/all`);
+        const response = await axios.get(`${HOST_PORT}${PLAYERS}/all`);
         return response.data;
         
     }

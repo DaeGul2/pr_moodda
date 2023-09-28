@@ -1,10 +1,10 @@
-import { HOST_PORT } from '../config';
+import { GAMES, HOST_PORT } from '../config';
 import axios from 'axios';
 
 //type  0 종료 1 진행중 2 진행 전
 export const getGames = async (page, perPage, type) => {
     try {
-        const games = await axios.get(`${HOST_PORT}/api/gaems?page=${page}&perPage=${perPage}&type=${type}`);
+        const games = await axios.get(`${HOST_PORT}${GAMES}?page=${page}&perPage=${perPage}&type=${type}`);
         return games;
     }
     catch (e) {
@@ -14,21 +14,31 @@ export const getGames = async (page, perPage, type) => {
 
 export const createGame = async (newGame) => {
     try {
-        const response = await axios.post(`${HOST_PORT}/api/games`, newGame);
+        const response = await axios.post(`${HOST_PORT}${GAMES}`, newGame);
         return response;
     }
-    catch(e){
+    catch (e) {
         throw new Error('games 정보 생성 중 오류 발생');
     }
 
 }
 
-export const updateGame = async(gameId,newGame) => {
-    try{
-        const response = await axios.put(`${HOST_PORT}/api/games/${gameId}`, newGame)
+export const updateGame = async (gameId, newGame) => {
+    try {
+        const response = await axios.put(`${HOST_PORT}${GAMES}/${gameId}`, newGame)
         return response;
     }
-    catch(e){
+    catch (e) {
+        throw new Error('games 업데이트 중 오류 발생');
+    }
+}
+
+export const deletedGame = async (gameId) => {
+    try {
+        const response = await axios.delete(`${HOST_PORT}${GAMES}/${gameId}`)
+        return response;
+    }
+    catch (e) {
         throw new Error('games 업데이트 중 오류 발생');
     }
 }

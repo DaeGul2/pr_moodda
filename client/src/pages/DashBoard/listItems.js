@@ -12,6 +12,7 @@ import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
 import { Link } from 'react-router-dom';
+import './listItem.css';
 
 export const mainListItems = (
   <React.Fragment>
@@ -55,7 +56,13 @@ export const mainListItems = (
       <ListItemIcon>
         <SettingsIcon />
       </ListItemIcon>
-      <Link to="/admin"><ListItemText primary="관리자 페이지" /></Link>
+      <Link to="/admin"><ListItemText primary="선수 관리" /></Link>
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <SettingsIcon />
+      </ListItemIcon>
+      <Link to="/admin/game"><ListItemText primary="대전 관리" /></Link>
     </ListItemButton>
   </React.Fragment>
 );

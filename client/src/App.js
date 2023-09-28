@@ -6,6 +6,8 @@ import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -28,6 +30,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import GameAdmin from './pages/GameAdmin';
 
 function Copyright(props) {
   return (
@@ -89,7 +92,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 // TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
+const defaultTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
 
 
 function App() {
@@ -178,6 +185,7 @@ function App() {
               <Route path="/chart" element={<Chart ></Chart>}></Route>
               <Route path="/admin" element={<Admin ></Admin>}></Route>
               <Route path="/title" element={<Title children={<>hi</>} ></Title>}></Route>
+              <Route path="/admin/game" element={<GameAdmin children={<>hi</>} ></GameAdmin>}></Route>
             </Routes>
             {/**----------------- */}
           </Box>

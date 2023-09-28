@@ -1,10 +1,11 @@
 import { getPlayers, getAllPlayers } from "../api/playerAPI";
 import { useState, useEffect } from 'react';
 import * as React from 'react';
-import { Card, Container, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import {Pagination ,Card, Container, Table, TableBody, TableCell, TableHead, TableRow,Stack } from '@mui/material';
 import SearchBar from "../util/SearchBar";
 import Title from './DashBoard/Title';
 import Link from '@mui/material/Link';
+
 
 
 
@@ -42,6 +43,10 @@ function Admin() {
         console.log('test');
     }, [])
 
+    const handleChange = (event, value) => {
+        setCurrentPlayerPage(value);
+      };
+
     return (
         <React.Fragment>
             <Container>
@@ -71,11 +76,10 @@ function Admin() {
                             ))}
                         </TableBody>
                     </Table>
-                    <div>
-                        <button onClick={() => { setCurrentPlayerPage(currentPlayerPage - 1) }}>이전</button>
-                        {currentPlayerPage}
-                        <button onClick={() => { setCurrentPlayerPage(currentPlayerPage + 1) }}>다음</button>
-                    </div>
+                    <Stack spacing={2}>
+                        
+                        <Pagination count={totalPlayerPage} page={currentPlayerPage} onChange={handleChange} />
+                    </Stack>
                     <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
                         See more orders
                     </Link>
