@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import { Grid, Paper, Box, Fab, Stack, Button } from '@mui/material'
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import { getGames, updateGames, deleteGames, createGames } from '../api/gameAPI';
+import { getGames, updateGame, deleteGame, createGame, deleteMatch } from '../api/gameAPI';
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
   width: 120,
@@ -13,7 +13,21 @@ const DemoPaper = styled(Paper)(({ theme }) => ({
   textAlign: 'center',
 }));
 
-const deleteGame = (gameId) => {
+const delGame = (gameId) => {
+  try {
+
+    if (confirm('삭제하시겠습니까?')) {
+      deleteGame(gameId).then(res => console.log(res)).catch(e => alert(e));
+      alert('삭제되었습니다.');
+    }
+    return;
+  }
+  catch (error) {
+    alert(error);
+  }
+}
+
+const delMatch = (gameId, matchId) => {
 
 }
 
@@ -40,7 +54,7 @@ function GameAdmin() {
                 <Stack direction={'col'} spacing={2}>
                   <span><h2>{game.memo}</h2></span>
                   <span>
-                    <Fab onClick={() => { deleteGame(game._id) }} color="error" aria-label="delete">
+                    <Fab onClick={() => { delGame(game._id) }} color="error" aria-label="delete">
                       삭제
                     </Fab>
                   </span>
@@ -63,10 +77,10 @@ function GameAdmin() {
                             <p>배당 : {subGame.away.rate}</p>
                             <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
                           </DemoPaper>
-                          <Button onClick={() => { deleteGame(game._id) }} variant='outlined' color="error" aria-label="delete">
+                          <Button onClick={() => { delMatch(game._id, subGame._id) }} variant='outlined' color="error" aria-label="delete">
                             삭제
                           </Button>
-                          <Button onClick={() => { deleteGame(game._id) }} variant='outlined' color="success" aria-label="delete">
+                          <Button onClick={() => { delGame(game._id) }} variant='outlined' color="success" aria-label="delete">
                             수정
                           </Button>
                         </Stack>

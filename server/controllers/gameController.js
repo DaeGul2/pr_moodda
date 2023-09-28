@@ -91,3 +91,32 @@ exports.deleteGame = async (req, res) => {
     }
 };
 
+exports.deleteMatch = async (req, res) => {
+    try {
+        console.log("deleteMatch");
+        const {matchId,gameId} = req.query;
+        const deletedGame = await Game.updateOne(
+            { _id: gameId }, // 컬렉션의 _id는 'games'로 가정합니다.
+            { $pull: { games: { _id: matchId } } }
+          );
+        console.log(deletedGame);
+        if (!deletedGame || !deletedGame.modifiedCount) {
+            return res.status(404).json({ error: '해당 ID의 매치를 찾을 수 없습니다.' });
+        }
+        res.status(204).send({message:"삭제되었습니다.",deletedGame});
+
+    }
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ error: '매치를 삭제하는 중에 오류가 발생했습니다.' });
+    }
+}
+
+
+/**
+ 
+자 나는 express로 백엔드 쪽 코드를 짤건데, 라우트쪽만 짜주면돼(contorller)
+1. games라는 컬렉션에 접근해서
+2. games 컬렉션 안에 있는 games라는 필드의 요소들 중
+3. _id가 matchId인 것을 찾아서 지우는 로직을 짜줘
+ */

@@ -33,9 +33,19 @@ export const updateGame = async (gameId, newGame) => {
     }
 }
 
-export const deletedGame = async (gameId) => {
+export const deleteGame = async (gameId) => {
     try {
         const response = await axios.delete(`${HOST_PORT}${GAMES}/${gameId}`)
+        return response;
+    }
+    catch (e) {
+        throw new Error('games 업데이트 중 오류 발생');
+    }
+}
+
+export const deleteMatch = async (gameId,matchId) => {
+    try {
+        const response = await axios.delete(`${HOST_PORT}${GAMES}/?gameId=${gameId}&matchId=${matchId}`)
         return response;
     }
     catch (e) {

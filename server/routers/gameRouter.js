@@ -9,6 +9,7 @@ router.post('/', gameController.createGame);
 router.get('/', gameController.getGames);
 router.put('/:gameId', gameController.updateGame);
 router.delete('/:gameId',gameController.deleteGame);
+router.delete('/',gameController.deleteMatch);
 
 
 module.exports = router;
