@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 import { getAllPlayers } from "../api/playerAPI"; // 예를 들어, 선수 데이터를 가져오는 API 함수를 import
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Paper } from "@mui/material";
+import { Paper, Grid } from "@mui/material";
+import { styled } from '@mui/material/styles';
 
+
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+}));
 function CreateGame() {
 
     const initialGame = {
@@ -102,69 +111,50 @@ function CreateGame() {
                 <br />
                 {formData.games.map((game, index) => (
                     <div key={index}>
-                        <label>
-                            홈팀 선수 이름:
-                            <select
-                                value={game.home.player_name}
-                                onChange={(e) =>
-                                    handleGameChange(e, index, "home", "player_name")
-                                }
-                            >
-                                {/* 선수 데이터를 옵션으로 표시 */}
-                                {players.map((player) => (
-                                    <option key={player._id} value={player.player_name}>
-                                        {player.player_name}
-                                    </option>
-                                ))}
-                            </select>
+                        <Grid container spacing={2}>
+                            <Grid item xs={5.5}>
+                                <Item>
+                                    <Paper>
+                                        <Autocomplete
+                                            {...defaultProps}
+                                            id="auto-complete"
+                                            autoComplete
+                                            includeInputInList
+                                            onChange={(e, newValue) => { console.log(newValue) }}
+                                            renderInput={(params) => (
+                                                <TextField {...params} label="Home" variant="standard" />
+                                            )}
+                                        />
+                                    </Paper>
+                                </Item>
+                            </Grid>
+                            <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
+                                <h2>vs</h2>
+                            </Grid>
+                            <Grid item xs={5.5}>
+                                <Item>
+                                    <Paper>
+                                        <Autocomplete
+                                            {...defaultProps}
+                                            id="auto-complete"
+                                            autoComplete
+                                            includeInputInList
+                                            renderInput={(params) => (
+                                                <TextField {...params} label="Away" variant="standard" />
+                                            )}
+                                        />
+                                    </Paper>
 
-                        </label>
-                        <label>
-                            어웨이팀 선수 이름:
-                            <input
-                                type="text"
-                                value={game.away.player_name}
-                                onChange={(e) => handleGameChange(e, index, "away", "player_name")}
-                            />
-                        </label>
-                        <label>
-                            레이팅:
-                            <input
-                                type="number"
-                                min="1"
-                                step="0.01"
-                                value={game.home.rate}
-                                onChange={(e) => handleGameChange(e, index, "home", "rate")}
-                            />
-                        </label>
+                                </Item>
+                            </Grid>
+
+                        </Grid>
                         {/* 또 다른 홈팀과 어웨이팀 필드들을 추가할 수 있습니다 */}
                     </div>
                 ))}
                 <br />
-                <Paper>
-                <Autocomplete
-                    {...defaultProps}
-                    id="auto-complete"
-                    autoComplete
-                    includeInputInList
-                    onChange={(e)=>{console.log(e.target)}}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Home" variant="standard" />
-                    )}
-                />
-                </Paper>
-                <Paper>
-                <Autocomplete
-                    {...defaultProps}
-                    id="auto-complete"
-                    autoComplete
-                    includeInputInList
-                    renderInput={(params) => (
-                        <TextField {...params} label="Away" variant="standard" />
-                    )}
-                />
-                </Paper>
-                
+
+
             </div>
             : <>Loading...</>}</>
 
