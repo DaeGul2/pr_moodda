@@ -108,7 +108,7 @@ function CreateGame() {
         <>{players ?
             <Paper className="m-5">
                 <div className="p-5">
-                    <h2>게임 정보 입력</h2>
+                    <h2>대전 추가하기</h2>
                     <hr />
                     <label>
                         Game Type:
