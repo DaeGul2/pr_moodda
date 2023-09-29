@@ -24,38 +24,41 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const delGame = (gameId) => {
-  try {
-    deleteGame(gameId).then(res => console.log(res)).catch(e => alert(e));
-    alert('삭제되었습니다.');
-    return;
-  }
-  catch (error) {
-    alert(error);
-  }
-}
 
-const delMatch = (gameId, matchId) => {
-  try {
-    deleteMatch(gameId, matchId).then(res => console.log(res)).catch(e => alert(e))
-    alert('삭제되었습니다.');
-    return;
-  }
-  catch (error) {
-    alert(error);
-  }
-}
 
 function GameAdmin() {
   const [gameType, setGameType] = useState(2);
   const [games, setGames] = useState(null);
+  const [isChanged, setIsChanged] = useState(false);
   useEffect(() => {
     getGames(1, 10).then((res) => {
       setGames(res.data.games);
-      console.log(res.data.games)
-
     })
-  }, [games])
+  }, [isChanged])
+
+  const delGame = (gameId) => {
+    try {
+      deleteGame(gameId).then(res => console.log(res)).catch(e => alert(e));
+      alert('삭제되었습니다.');
+      setIsChanged(!isChanged);
+      return;
+    }
+    catch (error) {
+      alert(error);
+    }
+  }
+  
+  const delMatch = (gameId, matchId) => {
+    try {
+      deleteMatch(gameId, matchId).then(res => console.log(res)).catch(e => alert(e))
+      alert('삭제되었습니다.');
+      setIsChanged(!isChanged);
+      return;
+    }
+    catch (error) {
+      alert(error);
+    }
+  }
   return (
     <>
 

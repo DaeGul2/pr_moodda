@@ -43,19 +43,27 @@ function CreateGame() {
     });
 
     const handleAddGame = () => {
+        console.log("클릭됨?")
         setFormData({
             ...formData,
             games: [...formData.games, initialGame],
         });
     };
 
-    const handleGameChange = (event, index, team, field) => {
-        const newValue = event.target.value;
+    const handleGameChange = (index,team,newValue) => {
+     
         setFormData((prevData) => {
             const updatedGames = [...prevData.games];
-            updatedGames[index][team][field] = newValue;
+            updatedGames[index][team]['_id'] = newValue._id;
+            updatedGames[index][team]['sex'] = newValue.sex;
+            updatedGames[index][team]['player_name'] = newValue.player_name;
+            updatedGames[index][team]['player_tpz'] = newValue.player_tpz;
+            updatedGames[index][team]['player_uni'] = newValue.player_uni;
+            updatedGames[index][team]['player_tear'] = newValue.player_tear;
+            
             return { ...prevData, games: updatedGames };
         });
+        console.log(formData)
     };
 
     const [players, setPlayers] = useState(null);
@@ -120,7 +128,7 @@ function CreateGame() {
                                             id="auto-complete"
                                             autoComplete
                                             includeInputInList
-                                            onChange={(e, newValue) => { console.log(newValue) }}
+                                            onChange={(e, newValue) => { handleGameChange(index,'home',newValue) }}
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Home" variant="standard" />
                                             )}
@@ -138,7 +146,7 @@ function CreateGame() {
                                             {...defaultProps}
                                             id="auto-complete"
                                             autoComplete
-                                            onChange={(e, newValue) => { console.log(newValue) }}
+                                            onChange={(e, newValue) => { handleGameChange(index,'away',newValue) }}
                                             includeInputInList
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Away" variant="standard" />
