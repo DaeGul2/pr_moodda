@@ -8,6 +8,12 @@ import { createGame } from "../api/gameAPI";
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import dayjs from 'dayjs';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -94,7 +100,7 @@ function CreateGame() {
         getOptionLabel: (option) => `${option.player_name}-${option.player_tpz}(${option.player_tear} - ${option.player_uni})`,
     };
 
-    const sendData = ()=>{
+    const sendData = () => {
         createGame(formData);
     }
 
@@ -103,18 +109,24 @@ function CreateGame() {
             <Paper className="m-5">
                 <div className="p-5">
                     <h2>게임 정보 입력</h2>
-                    <hr/>
+                    <hr />
                     <label>
                         Game Type:
-                        <select
+                        <InputLabel className="mt-1" id="demo-simple-select-label">일대일, 팀전</InputLabel>
+                        <Select
+                        className="mt-1"
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
                             value={formData.game_type}
+                            label="게임 타입"
                             onChange={(e) =>
                                 setFormData({ ...formData, game_type: e.target.value })
                             }
                         >
-                            <option value="1v1">일대일</option>
-                            <option value="nvm">다대다</option>
-                        </select>
+                            <MenuItem value={'1v1'}>일대일</MenuItem>
+                            <MenuItem value={'nvm'}>팀전</MenuItem>
+                          
+                        </Select>
                     </label>
                     <br />
                     <label>
@@ -157,11 +169,13 @@ function CreateGame() {
                                                 step: 0.05, // 숫자 간격 설정
                                                 min: 1,     // 최소값 설정
                                             }}
-                                            onChange={(e)=>{ setFormData((prevData) => {
-                                                const updatedGames = [...prevData.games];
-                                                updatedGames[index]['home']['rate'] = e.target.value;
-                                                return { ...prevData, games: updatedGames };
-                                            });}}
+                                            onChange={(e) => {
+                                                setFormData((prevData) => {
+                                                    const updatedGames = [...prevData.games];
+                                                    updatedGames[index]['home']['rate'] = e.target.value;
+                                                    return { ...prevData, games: updatedGames };
+                                                });
+                                            }}
                                         />
                                     </Item>
 
@@ -190,11 +204,13 @@ function CreateGame() {
                                             InputLabelProps={{
                                                 shrink: true,
                                             }}
-                                            onChange={(e)=>{ setFormData((prevData) => {
-                                                const updatedGames = [...prevData.games];
-                                                updatedGames[index]['away']['rate'] = e.target.value;
-                                                return { ...prevData, games: updatedGames };
-                                            });}}
+                                            onChange={(e) => {
+                                                setFormData((prevData) => {
+                                                    const updatedGames = [...prevData.games];
+                                                    updatedGames[index]['away']['rate'] = e.target.value;
+                                                    return { ...prevData, games: updatedGames };
+                                                });
+                                            }}
                                             inputProps={{
                                                 step: 0.05, // 숫자 간격 설정
                                                 min: 1,     // 최소값 설정

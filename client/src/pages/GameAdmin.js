@@ -6,8 +6,13 @@ import { Grid, Paper,  Fab, Stack, Button } from '@mui/material'
 import {  styled } from '@mui/material/styles';
 import { getGames, updateGame, deleteGame, createGame, deleteMatch } from '../api/gameAPI';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 
+function formatDate(inputDate) {
+  const formattedDate = dayjs(inputDate).format('YYYY-MM-DD HH:mm');
+  return formattedDate;
+}
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
   width: 120,
@@ -82,15 +87,18 @@ function GameAdmin() {
                         </Fab>
                       </span>
                     </Stack>
-                    <p>
+                    <span>
                       {game.game_type === 'nvm' ? '단체전' : '개인전'}
-                    </p>
+                    </span>
+                   
 
                     {/* {--- 1 대전당 게임 리스트 ---} */}
                     {game.games.map((subGame, idx) => {
                       return (
                         <div className='mb-5' key={subGame._id}>
-                          <p>{subGame.result === 2 ? <Chip label="시작전" color="primary" /> : subGame.result === 1 ? <Chip label="진행중" color="success" /> : <Chip label="종료" color="error" />}</p>
+                          <span>{subGame.result === 2 ? <Chip label="시작전" color="primary" /> : subGame.result === 1 ? <Chip label="진행중" color="success" /> : <Chip label="종료" color="error" />}</span>
+                          <span>{formatDate(subGame.createdAt)+" 생성됨"}</span>
+
                           <Card className='gameCard'>
                             <Grid container spacing={2}>
                               <Grid item xs={5.5}>
