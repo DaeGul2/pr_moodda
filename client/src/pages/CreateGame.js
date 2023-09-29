@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getAllPlayers } from "../api/playerAPI"; // 예를 들어, 선수 데이터를 가져오는 API 함수를 import
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import { Paper } from "@mui/material";
 
 function CreateGame() {
+
     const initialGame = {
         home: {
             _id: "",
@@ -52,14 +56,21 @@ function CreateGame() {
         // 선수 데이터를 비동기적으로 가져옴 (예: getPlayers 함수 사용)
         getAllPlayers()
             .then((data) => {
-                
+
                 // 가져온 선수 데이터를 players 상태에 설정
                 setPlayers(data);
+                console.log(players)
+
             })
             .catch((error) => {
                 console.error("선수 데이터를 가져오는 중 오류 발생:", error);
             });
     }, []);
+
+    const defaultProps = {
+        options: players,
+        getOptionLabel: (option) => `${option.player_name}-${option.player_tpz}(${option.player_tear} - ${option.player_uni})`,
+    };
 
     return (
         <>{players ?
@@ -106,6 +117,7 @@ function CreateGame() {
                                     </option>
                                 ))}
                             </select>
+
                         </label>
                         <label>
                             어웨이팀 선수 이름:
@@ -129,7 +141,30 @@ function CreateGame() {
                     </div>
                 ))}
                 <br />
-                {/* 폼 제출 버튼과 이벤트 핸들러를 추가하세요 */}
+                <Paper>
+                <Autocomplete
+                    {...defaultProps}
+                    id="auto-complete"
+                    autoComplete
+                    includeInputInList
+                    onChange={(e)=>{console.log(e.target)}}
+                    renderInput={(params) => (
+                        <TextField {...params} label="Home" variant="standard" />
+                    )}
+                />
+                </Paper>
+                <Paper>
+                <Autocomplete
+                    {...defaultProps}
+                    id="auto-complete"
+                    autoComplete
+                    includeInputInList
+                    renderInput={(params) => (
+                        <TextField {...params} label="Away" variant="standard" />
+                    )}
+                />
+                </Paper>
+                
             </div>
             : <>Loading...</>}</>
 
