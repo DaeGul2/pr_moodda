@@ -116,6 +116,45 @@ exports.deleteMatch = async (req, res) => {
     }
 }
 
+exports.updateMatch = async (req, res) => {
+    try {
+        const { gameId, matchId } = req.query;
+        const { home, away, result } = req.body;
+
+        // gameId로 해당 document를 찾습니다.
+        const game = await Game.findById(gameId);
+
+        if (!game) {
+            return res.status(404).json({ error: '해당 ID의 게임을 찾을 수 없습니다.' });
+        }
+
+        // games 필드 요소 중 matchId와 일치하는 _id를 가진 요소를 찾습니다.
+        const matchToUpdate = game.games.find(match => match._id.toString() === matchId);
+
+        if (!matchToUpdate) {
+            return res.status(404).json({ error: '해당 ID의 매치를 찾을 수 없습니다.' });
+        }
+
+        // body로 받아온 home, away, result 값을 사용하여 기존 필드 값을 업데이트합니다.
+        if (home !== undefined) {
+            matchToUpdate.home = home;
+        }
+        if (away !== undefined) {
+            matchToUpdate.away = away;
+        }
+        if (result !== undefined) {
+            matchToUpdate.result = result;
+        }
+
+        // 변경된 데이터를 저장합니다.
+        await game.save();
+
+        res.status(200).json({ message: '매치가 업데이트되었습니다.', updatedMatch: matchToUpdate });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: '매치를 업데이트하는 중에 오류가 발생했습니다.' });
+    }
+};
 
 /**
  
