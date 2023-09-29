@@ -10,6 +10,7 @@ router.get('/', gameController.getGames);
 router.put('/:gameId', gameController.updateGame);
 router.delete('/:gameId',gameController.deleteGame);
 router.delete('/',gameController.deleteMatch);
+router.put('/match',gameController.updateMatch);
 
 
 module.exports = router;

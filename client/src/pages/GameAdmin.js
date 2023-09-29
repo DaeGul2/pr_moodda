@@ -52,6 +52,7 @@ function GameAdmin() {
   const [gameType, setGameType] = useState(2);
   const [toUpdateData, setToUpdateData] = useState(null);
   const [toUpdateGameId, setToUpdateGameId] = useState(null);
+  const [toUpdateMatchId, setToUpdateMatchId] = useState(null);
   const [games, setGames] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
   useEffect(() => {
@@ -92,7 +93,7 @@ function GameAdmin() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, width: 1000 }}>
-          <UpdateGame data={toUpdateData} gameId={toUpdateGameId}></UpdateGame>
+          <UpdateGame data={toUpdateData} matchId={toUpdateMatchId} gameId={toUpdateGameId}></UpdateGame>
         </Box>
       </Modal>
       <br />
@@ -151,7 +152,8 @@ function GameAdmin() {
                         </Button>
                         <Button onClick={async () => {
                           setToUpdateData(subGame);
-                          setToUpdateGameId(subGame._id);
+                          setToUpdateGameId(game._id);
+                          setToUpdateMatchId(subGame._id)
                           handleOpen();
                         }} variant='outlined' color="success" aria-label="delete">
                           수정

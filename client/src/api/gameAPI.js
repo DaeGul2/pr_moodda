@@ -52,3 +52,13 @@ export const deleteMatch = async (gameId,matchId) => {
         throw new Error('games 업데이트 중 오류 발생');
     }
 }
+
+export const updateMatch = async (gameId, matchId,newMatch) => {
+    try {
+        const response = await axios.put(`${HOST_PORT}${GAMES}/match?gameId=${gameId}&matchId=${matchId}`, newMatch)
+        return response;
+    }
+    catch (e) {
+        throw new Error('games 업데이트 중 오류 발생');
+    }
+}

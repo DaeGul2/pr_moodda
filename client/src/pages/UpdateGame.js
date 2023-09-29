@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Paper, Grid } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { createGame, updateGame } from "../api/gameAPI";
+import { createGame, updateMatch } from "../api/gameAPI";
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
@@ -23,7 +23,7 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
-function UpdateGame({ data, gameId }) {
+function UpdateGame({ data, gameId, matchId }) {
     const [players, setPlayers] = useState([]);
     const [formData, setFormData] = useState(data)
     useEffect(() => {
@@ -37,7 +37,7 @@ function UpdateGame({ data, gameId }) {
             .catch((error) => {
                 console.error("선수 데이터를 가져오는 중 오류 발생:", error);
             });
-            console.log(formData)
+        console.log("formData",formData)
     }, [])
 
     const defaultProps = {
@@ -47,12 +47,16 @@ function UpdateGame({ data, gameId }) {
 
     const update = () => {
         console.log(formData)
+        updateMatch(gameId, matchId, formData)
+            .then((res) => {alert('수정되었습니다.')
+            .catch((e)=>{alert(e)});
+            })
     }
 
     const handleGameChange = (team, newValue) => {
         if (newValue) {
             setFormData((prevData) => {
-                const updatedGames = {...prevData};
+                const updatedGames = { ...prevData };
                 updatedGames[team]['_id'] = newValue._id;
                 updatedGames[team]['sex'] = newValue.sex;
                 updatedGames[team]['player_name'] = newValue.player_name;
@@ -60,7 +64,7 @@ function UpdateGame({ data, gameId }) {
                 updatedGames[team]['player_uni'] = newValue.player_uni;
                 updatedGames[team]['player_tear'] = newValue.player_tear;
 
-                return { ...prevData, games: updatedGames };
+                return { ...updatedGames };
             });
             console.log(formData)
         }
@@ -95,13 +99,13 @@ function UpdateGame({ data, gameId }) {
                                 step: 0.05, // 숫자 간격 설정
                                 min: 1,     // 최소값 설정
                             }}
-                        onChange={(e) => {
-                            setFormData((prevData) => {
-                                const updatedGames = { ...prevData };
-                                updatedGames.home.rate = e.target.value; // away 필드의 rate 값을 업데이트
-                                return { ...prevData, home: updatedGames.away }; // away 필드만 업데이트된 값으로 설정
-                            });
-                        }}
+                            onChange={(e) => {
+                                setFormData((prevData) => {
+                                    const updatedGames = { ...prevData };
+                                    updatedGames.home.rate = e.target.value; // away 필드의 rate 값을 업데이트
+                                    return { ...prevData, home: updatedGames.away }; // away 필드만 업데이트된 값으로 설정
+                                });
+                            }}
                         />
                     </Grid>
                     <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
@@ -138,7 +142,7 @@ function UpdateGame({ data, gameId }) {
                                     updatedGames.away.rate = e.target.value; // away 필드의 rate 값을 업데이트
                                     return { ...prevData, away: updatedGames.away }; // away 필드만 업데이트된 값으로 설정
                                 });
-                                
+
                             }}
                         />
                     </Grid>
