@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import Chip from '@mui/material/Chip';
-import { Grid, Paper, Fab, Stack, Button, Box, ButtonGroup } from '@mui/material'
+import { Grid, Paper, Fab, Stack, Button, Box, ButtonGroup, Pagination } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import { getGames, updateMatch, deleteGame, deleteMatch } from '../api/gameAPI';
 import { Link } from 'react-router-dom';
@@ -55,10 +55,23 @@ function GameAdmin() {
   const [toUpdateGameId, setToUpdateGameId] = useState(null);
   const [toUpdateMatchId, setToUpdateMatchId] = useState(null);
   const [games, setGames] = useState(null);
+
+  /**페이지네이션 */
+  const [perPage, setPerPage] = useState(10);
+  const [totalPlayerPage, setTotalPlayerPage] = useState(100);
+  const [currentPlayerPage, setCurrentPlayerPage] = useState(1);
+  const handleChange = (event, value) => {
+    setCurrentPlayerPage(value);
+  };
+  /*---*/
+
+
+
   const [isChanged, setIsChanged] = useState(false);
   useEffect(() => {
-    getGames(1, 10).then((res) => {
+    getGames(currentPlayerPage, perPage).then((res) => {
       setGames(res.data.games);
+      setTotalPlayerPage(res.totalPages);
     })
   }, [isChanged])
 
@@ -147,7 +160,7 @@ function GameAdmin() {
                       <div className='mb-5' >
                         <span>{subGame.result === 2 ? <><Chip label="시작 전" color="success" />  </> : subGame.result === 1 ? <><Chip label="진행중" color="warning" /> </> : <><Chip label="종료" color="error" /> </>}</span>
                         <span>{formatDate(subGame.createdAt) + " 생성됨"}</span>
-                        <span>{subGame.isPayed?<Chip label="정산완료" color="success"></Chip>:<Chip label="미정산" color="error"></Chip>}</span>
+                        <span>{subGame.isPayed ? <Chip label="정산완료" color="success"></Chip> : <Chip label="미정산" color="error"></Chip>}</span>
 
                         <Card className='gameCard'>
                           <Grid container spacing={2}>
@@ -195,6 +208,9 @@ function GameAdmin() {
 
             )
           })}
+          <Stack spacing={2}>
+            <Pagination count={totalPlayerPage} page={currentPlayerPage} onChange={handleChange} />
+          </Stack>
         </> : <>..Loading..</>
       }
     </>
