@@ -32,7 +32,7 @@ export const mainListItems = (
       <ListItemIcon>
         <ShoppingCartIcon />
       </ListItemIcon>
-      <Link to="/dashboard"><ListItemText primary="경기" /></Link>
+      <Link to="/betting"><ListItemText primary="경기" /></Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>

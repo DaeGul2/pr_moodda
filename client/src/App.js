@@ -25,6 +25,8 @@ import Orders from './pages/DashBoard/Orders';
 import Title from './pages/DashBoard/Title';
 import SignUp from './pages/SignUp'
 import Admin from './pages/Admin';
+
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -32,6 +34,7 @@ import {
 } from "react-router-dom";
 import GameAdmin from './pages/GameAdmin';
 import CreateGame from './pages/CreateGame';
+import Betting from './pages/Betting';
 
 function Copyright(props) {
   return (
@@ -179,6 +182,7 @@ function App() {
             <Toolbar />
             {/**컨텐츠 들어가는 곳 */}
             <Routes>
+              <Route path="/betting" element={<Betting ></Betting>}></Route>
               <Route path="/dashboard" element={<Dashboard ></Dashboard>}></Route>
               <Route path="/signup" element={<SignUp ></SignUp>}></Route>
               <Route path="/deposits" element={<Deposits ></Deposits>}></Route>
