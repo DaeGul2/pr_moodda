@@ -31,6 +31,7 @@ import {
   Route
 } from "react-router-dom";
 import GameAdmin from './pages/GameAdmin';
+import CreateGame from './pages/CreateGame';
 
 function Copyright(props) {
   return (
@@ -185,7 +186,8 @@ function App() {
               <Route path="/chart" element={<Chart ></Chart>}></Route>
               <Route path="/admin" element={<Admin ></Admin>}></Route>
               <Route path="/title" element={<Title children={<>hi</>} ></Title>}></Route>
-              <Route path="/admin/game" element={<GameAdmin children={<>hi</>} ></GameAdmin>}></Route>
+              <Route path="/admin/game" element={<GameAdmin></GameAdmin>}></Route>
+              <Route path="/creategame" element={<CreateGame ></CreateGame>}></Route>
             </Routes>
             {/**----------------- */}
           </Box>

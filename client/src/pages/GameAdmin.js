@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
+import Chip from '@mui/material/Chip';
 import { Grid, Paper, Box, Fab, Stack, Button } from '@mui/material'
 import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { getGames, updateGame, deleteGame, createGame, deleteMatch } from '../api/gameAPI';
@@ -52,7 +53,7 @@ function GameAdmin() {
   const [gameType, setGameType] = useState(2);
   const [games, setGames] = useState(null);
   useEffect(() => {
-    getGames(1, 10, gameType).then((res) => {
+    getGames(1, 10).then((res) => {
       setGames(res.data.games);
       console.log(res.data.games)
 
@@ -60,24 +61,7 @@ function GameAdmin() {
   }, [games])
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-          <Grid item xs={12}>
-            <FormControl>
-              <FormLabel id="demo-radio-buttons-group-label">대전타입 선택</FormLabel>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-              >
-                <FormControlLabel onClick={() => { console.log() }} value="female" control={<Radio />} label="시작 전" />
-                <FormControlLabel value="male" control={<Radio />} label="Male" />
-                <FormControlLabel value="other" control={<Radio />} label="Other" />
-              </RadioGroup>
-            </FormControl>
-          </Grid>
-        </Grid>
-      </Box >
+      
       <br />
       <Fab color="primary" aria-label="add">
         대전<AddIcon />
@@ -103,7 +87,7 @@ function GameAdmin() {
                 {game.games.map((subGame, idx) => {
                   return (
                     <div className='mb-5' key={subGame._id}>
-                      <p>게임상태 : {subGame.result}</p>
+                      <p>{subGame.result === 2 ? <Chip label="시작전" color="primary" /> : subGame.result === 1 ? <Chip label="진행중" color="success" /> : <Chip label="종료" color="error" />}</p>
                       <Card className='gameCard'>
                         <Grid container spacing={2}>
                           <Grid item xs={5.5}>
@@ -126,7 +110,7 @@ function GameAdmin() {
                         <Button onClick={() => { delMatch(game._id, subGame._id) }} variant='outlined' color="error" aria-label="delete">
                           삭제
                         </Button>
-                        <Button onClick={() => { delGame(game._id) }} variant='outlined' color="success" aria-label="delete">
+                        <Button variant='outlined' color="success" aria-label="delete">
                           수정
                         </Button>
                       </Card>
