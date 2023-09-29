@@ -120,10 +120,10 @@ exports.updateMatch = async (req, res) => {
     try {
         const { gameId, matchId } = req.query;
         const { home, away, result, _id, win} = req.body;
-        console.log("updaeMatch")
+        console.log(home,away,result,_id,win)
         // gameId로 해당 document를 찾습니다.
         const game = await Game.findById(gameId);
-        console.log(game,"게임")
+        
         if (!game) {
             return res.status(404).json({ error: '해당 ID의 게임을 찾을 수 없습니다.' });
         }
@@ -134,7 +134,7 @@ exports.updateMatch = async (req, res) => {
         if (!matchToUpdate) {
             return res.status(404).json({ error: '해당 ID의 매치를 찾을 수 없습니다.' });
         }
-        console.log(matchToUpdate,"매치투업데이트")
+        
 
         // body로 받아온 home, away, result 값을 사용하여 기존 필드 값을 업데이트합니다.
         if (home !== undefined) {

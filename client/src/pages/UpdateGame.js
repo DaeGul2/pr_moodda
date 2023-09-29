@@ -4,14 +4,9 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Paper, Grid } from "@mui/material";
 import { styled } from '@mui/material/styles';
-import { createGame, updateMatch } from "../api/gameAPI";
+import { updateMatch } from "../api/gameAPI";
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
-import SendIcon from '@mui/icons-material/Send';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
+
 
 
 
@@ -46,7 +41,6 @@ function UpdateGame({ data, gameId, matchId }) {
     };
 
     const update = () => {
-        console.log(formData)
         updateMatch(gameId, matchId, formData)
             .then((res) => {
                 alert('수정되었습니다.')
