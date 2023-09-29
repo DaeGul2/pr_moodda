@@ -37,7 +37,7 @@ function UpdateGame({ data, gameId, matchId }) {
             .catch((error) => {
                 console.error("선수 데이터를 가져오는 중 오류 발생:", error);
             });
-        console.log("formData",formData)
+        console.log("formData", formData)
     }, [])
 
     const defaultProps = {
@@ -48,9 +48,9 @@ function UpdateGame({ data, gameId, matchId }) {
     const update = () => {
         console.log(formData)
         updateMatch(gameId, matchId, formData)
-            .then((res) => {alert('수정되었습니다.')
-            .catch((e)=>{alert(e)});
-            })
+            .then((res) => {
+                alert('수정되었습니다.')
+            }).catch((e) => { alert(e) })
     }
 
     const handleGameChange = (team, newValue) => {
