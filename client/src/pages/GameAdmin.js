@@ -2,14 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import Chip from '@mui/material/Chip';
-import { Grid, Paper, Box, Fab, Stack, Button } from '@mui/material'
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { Grid, Paper,  Fab, Stack, Button } from '@mui/material'
+import {  styled } from '@mui/material/styles';
 import { getGames, updateGame, deleteGame, createGame, deleteMatch } from '../api/gameAPI';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { Link } from 'react-router-dom';
 
 

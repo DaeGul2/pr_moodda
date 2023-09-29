@@ -138,6 +138,7 @@ function CreateGame() {
                                             {...defaultProps}
                                             id="auto-complete"
                                             autoComplete
+                                            onChange={(e, newValue) => { console.log(newValue) }}
                                             includeInputInList
                                             renderInput={(params) => (
                                                 <TextField {...params} label="Away" variant="standard" />

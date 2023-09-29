@@ -2,7 +2,6 @@ import { getPlayers, getAllPlayers } from "../api/playerAPI";
 import { useState, useEffect } from 'react';
 import * as React from 'react';
 import {Pagination ,Card, Container, Table, TableBody, TableCell, TableHead, TableRow,Stack } from '@mui/material';
-import SearchBar from "../util/SearchBar";
 import Title from './DashBoard/Title';
 import Link from '@mui/material/Link';
 
@@ -84,7 +83,7 @@ function Admin() {
                         See more orders
                     </Link>
 
-                    <SearchBar searchKey={"player_name"} secondSearchKey={"player_uni"} thirdSearchKey={"player_tear"} data={rawData}></SearchBar>
+                   
                 </Card>
             </Container>
 
