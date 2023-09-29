@@ -4,6 +4,10 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Paper, Grid } from "@mui/material";
 import { styled } from '@mui/material/styles';
+import { createGame } from "../api/gameAPI";
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SendIcon from '@mui/icons-material/Send';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -38,7 +42,7 @@ function CreateGame() {
 
     const [formData, setFormData] = useState({
         game_type: "nvm",
-        memo: "최신",
+        memo: "",
         games: [initialGame],
     });
 
@@ -50,20 +54,21 @@ function CreateGame() {
         });
     };
 
-    const handleGameChange = (index,team,newValue) => {
-     
-        setFormData((prevData) => {
-            const updatedGames = [...prevData.games];
-            updatedGames[index][team]['_id'] = newValue._id;
-            updatedGames[index][team]['sex'] = newValue.sex;
-            updatedGames[index][team]['player_name'] = newValue.player_name;
-            updatedGames[index][team]['player_tpz'] = newValue.player_tpz;
-            updatedGames[index][team]['player_uni'] = newValue.player_uni;
-            updatedGames[index][team]['player_tear'] = newValue.player_tear;
-            
-            return { ...prevData, games: updatedGames };
-        });
-        console.log(formData)
+    const handleGameChange = (index, team, newValue) => {
+        if (newValue) {
+            setFormData((prevData) => {
+                const updatedGames = [...prevData.games];
+                updatedGames[index][team]['_id'] = newValue._id;
+                updatedGames[index][team]['sex'] = newValue.sex;
+                updatedGames[index][team]['player_name'] = newValue.player_name;
+                updatedGames[index][team]['player_tpz'] = newValue.player_tpz;
+                updatedGames[index][team]['player_uni'] = newValue.player_uni;
+                updatedGames[index][team]['player_tear'] = newValue.player_tear;
+
+                return { ...prevData, games: updatedGames };
+            });
+            console.log(formData)
+        }
     };
 
     const [players, setPlayers] = useState(null);
@@ -89,82 +94,127 @@ function CreateGame() {
         getOptionLabel: (option) => `${option.player_name}-${option.player_tpz}(${option.player_tear} - ${option.player_uni})`,
     };
 
+    const sendData = ()=>{
+        createGame(formData);
+    }
+
     return (
         <>{players ?
-            <div>
-                <h2>게임 정보 입력</h2>
-                <label>
-                    Game Type:
-                    <select
-                        value={formData.game_type}
-                        onChange={(e) =>
-                            setFormData({ ...formData, game_type: e.target.value })
-                        }
-                    >
-                        <option value="1v1">일대일</option>
-                        <option value="nvm">다대다</option>
-                    </select>
-                </label>
-                <br />
-                <label>
-                    Memo:
-                    <input
-                        type="text"
-                        value={formData.memo}
-                        onChange={(e) => setFormData({ ...formData, memo: e.target.value })}
-                    />
-                </label>
-                <br />
-                <button onClick={handleAddGame}>+ 추가</button>
-                <br />
-                {formData.games.map((game, index) => (
-                    <div key={index}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={5.5}>
-                                <Item>
-                                    <Paper>
-                                        <Autocomplete
-                                            {...defaultProps}
-                                            id="auto-complete"
-                                            autoComplete
-                                            includeInputInList
-                                            onChange={(e, newValue) => { handleGameChange(index,'home',newValue) }}
-                                            renderInput={(params) => (
-                                                <TextField {...params} label="Home" variant="standard" />
-                                            )}
+            <Paper className="m-5">
+                <div className="p-5">
+                    <h2>게임 정보 입력</h2>
+                    <hr/>
+                    <label>
+                        Game Type:
+                        <select
+                            value={formData.game_type}
+                            onChange={(e) =>
+                                setFormData({ ...formData, game_type: e.target.value })
+                            }
+                        >
+                            <option value="1v1">일대일</option>
+                            <option value="nvm">다대다</option>
+                        </select>
+                    </label>
+                    <br />
+                    <label>
+                        Memo:
+                        <input
+                            placeholder="대전에 대해 작성    ex) 대학대전"
+                            type="text"
+                            value={formData.memo}
+                            onChange={(e) => setFormData({ ...formData, memo: e.target.value })}
+                        />
+                    </label>
+                    <br />
+                    <button onClick={handleAddGame}>매치 추가</button>
+                    <br />
+                    {formData.games.map((game, index) => (
+                        <div className="mb-3" key={index}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={5.5}>
+                                    <Item>
+                                        <Paper>
+                                            <Autocomplete
+                                                {...defaultProps}
+                                                id="auto-complete"
+                                                autoComplete
+                                                includeInputInList
+                                                onChange={(e, newValue) => { handleGameChange(index, 'home', newValue) }}
+                                                renderInput={(params) => (
+                                                    <TextField {...params} label="Home" variant="standard" />
+                                                )}
+                                            />
+                                        </Paper>
+                                        <TextField className="mt-3"
+                                            id="outlined-number"
+                                            label="배당"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            inputProps={{
+                                                step: 0.05, // 숫자 간격 설정
+                                                min: 1,     // 최소값 설정
+                                            }}
+                                            onChange={(e)=>{ setFormData((prevData) => {
+                                                const updatedGames = [...prevData.games];
+                                                updatedGames[index]['home']['rate'] = e.target.value;
+                                                return { ...prevData, games: updatedGames };
+                                            });}}
                                         />
-                                    </Paper>
-                                </Item>
-                            </Grid>
-                            <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
-                                <h2>vs</h2>
-                            </Grid>
-                            <Grid item xs={5.5}>
-                                <Item>
-                                    <Paper>
-                                        <Autocomplete
-                                            {...defaultProps}
-                                            id="auto-complete"
-                                            autoComplete
-                                            onChange={(e, newValue) => { handleGameChange(index,'away',newValue) }}
-                                            includeInputInList
-                                            renderInput={(params) => (
-                                                <TextField {...params} label="Away" variant="standard" />
-                                            )}
+                                    </Item>
+
+                                </Grid>
+                                <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
+                                    <h2>vs</h2>
+                                </Grid>
+                                <Grid item xs={5.5}>
+                                    <Item>
+                                        <Paper>
+                                            <Autocomplete
+                                                {...defaultProps}
+                                                id="auto-complete"
+                                                autoComplete
+                                                onChange={(e, newValue) => { handleGameChange(index, 'away', newValue) }}
+                                                includeInputInList
+                                                renderInput={(params) => (
+                                                    <TextField {...params} label="Away" variant="standard" />
+                                                )}
+                                            />
+                                        </Paper>
+                                        <TextField className="mt-3"
+                                            id="outlined-number"
+                                            label="배당"
+                                            type="number"
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                            onChange={(e)=>{ setFormData((prevData) => {
+                                                const updatedGames = [...prevData.games];
+                                                updatedGames[index]['away']['rate'] = e.target.value;
+                                                return { ...prevData, games: updatedGames };
+                                            });}}
+                                            inputProps={{
+                                                step: 0.05, // 숫자 간격 설정
+                                                min: 1,     // 최소값 설정
+                                            }}
                                         />
-                                    </Paper>
 
-                                </Item>
+                                    </Item>
+                                </Grid>
+
                             </Grid>
+                            {/* 또 다른 홈팀과 어웨이팀 필드들을 추가할 수 있습니다 */}
+                        </div>
+                    ))}
+                    <br />
+                    <Button onClick={sendData} variant="contained" endIcon={<SendIcon />}>
+                        Send
+                    </Button>
 
-                        </Grid>
-                        {/* 또 다른 홈팀과 어웨이팀 필드들을 추가할 수 있습니다 */}
-                    </div>
-                ))}
-                <br />
-
-
-            </div>
+                </div>
+            </Paper>
             : <>Loading...</>}</>
 
     );
