@@ -147,6 +147,7 @@ function GameAdmin() {
                       <div className='mb-5' >
                         <span>{subGame.result === 2 ? <><Chip label="시작 전" color="success" />  </> : subGame.result === 1 ? <><Chip label="진행중" color="warning" /> </> : <><Chip label="종료" color="error" /> </>}</span>
                         <span>{formatDate(subGame.createdAt) + " 생성됨"}</span>
+                        <span>{subGame.isPayed?<Chip label="정산완료" color="success"></Chip>:<Chip label="미정산" color="error"></Chip>}</span>
 
                         <Card className='gameCard'>
                           <Grid container spacing={2}>

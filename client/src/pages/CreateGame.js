@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getAllPlayers } from "../api/playerAPI"; // 예를 들어, 선수 데이터를 가져오는 API 함수를 import
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import { Paper, Grid } from "@mui/material";
+import { Paper, Grid, Box } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { createGame } from "../api/gameAPI";
 import Button from '@mui/material/Button';
@@ -12,6 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -24,6 +26,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 function CreateGame() {
+    const navigate = useNavigate();
 
     const initialGame = {
         home: {
@@ -101,7 +104,12 @@ function CreateGame() {
     };
 
     const sendData = () => {
-        createGame(formData);
+        createGame(formData).then((res) => {
+            alert('등록되었습니다.');
+            navigate(-1);
+        }).catch(err => alert(err));
+
+
     }
 
     return (
@@ -110,11 +118,23 @@ function CreateGame() {
                 <div className="p-5">
                     <h2>대전 추가하기</h2>
                     <hr />
+                    <Box
+                        sx={{
+                            width: 500,
+                            maxWidth: '100%',
+                        }}
+                    >
+                        <TextField
+                            value={formData.memo}
+                            onChange={(e) => setFormData({ ...formData, memo: e.target.value })}
+                            fullWidth label="게임 타이틀" id="fullWidth"
+                            placeholder="게임 타이틀을 입력해주세요" />
+                    </Box>
                     <label>
                         Game Type:
                         <InputLabel className="mt-1" id="demo-simple-select-label">일대일, 팀전</InputLabel>
                         <Select
-                        className="mt-1"
+                            className="mt-1"
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
                             value={formData.game_type}
@@ -125,18 +145,8 @@ function CreateGame() {
                         >
                             <MenuItem value={'1v1'}>일대일</MenuItem>
                             <MenuItem value={'nvm'}>팀전</MenuItem>
-                          
+
                         </Select>
-                    </label>
-                    <br />
-                    <label>
-                        Memo:
-                        <input
-                            placeholder="대전에 대해 작성    ex) 대학대전"
-                            type="text"
-                            value={formData.memo}
-                            onChange={(e) => setFormData({ ...formData, memo: e.target.value })}
-                        />
                     </label>
                     <br />
                     <button onClick={handleAddGame}>매치 추가</button>
@@ -226,7 +236,7 @@ function CreateGame() {
                     ))}
                     <br />
                     <Button onClick={sendData} variant="contained" endIcon={<SendIcon />}>
-                        Send
+                        등록
                     </Button>
 
                 </div>

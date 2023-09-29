@@ -119,7 +119,7 @@ exports.deleteMatch = async (req, res) => {
 exports.updateMatch = async (req, res) => {
     try {
         const { gameId, matchId } = req.query;
-        const { home, away, result, _id, win} = req.body;
+        const { home, away, result, _id, win, isPayed} = req.body;
         console.log(home,away,result,_id,win)
         // gameId로 해당 document를 찾습니다.
         const game = await Game.findById(gameId);
@@ -149,8 +149,11 @@ exports.updateMatch = async (req, res) => {
         if (win !== undefined) {
             matchToUpdate.win = win;
         }
-        if (result !== undefined) {
+        if (_id !== undefined) {
             matchToUpdate._id = _id;
+        }
+        if (isPayed !== undefined) {
+            matchToUpdate.isPayed = isPayed;
         }
 
         // 변경된 데이터를 저장합니다.

@@ -22,6 +22,7 @@ const playerSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    
     rate:{type:Number}
 });
 
@@ -31,6 +32,10 @@ const subGame = new mongoose.Schema({
     result: {
         type: Number,
         default: 2 // 0 종료 1 진행중 2 진행 전
+    },
+    isPayed:{
+        type:Boolean,
+        default:false
     },
     win:{type:String,default:'yet', enum:['home','away','yet']}
 
