@@ -10,6 +10,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import { Link } from 'react-router-dom';
+
 
 
 const DemoPaper = styled(Paper)(({ theme }) => ({
@@ -61,71 +63,74 @@ function GameAdmin() {
   }, [games])
   return (
     <>
-      
+
       <br />
-      <Fab color="primary" aria-label="add">
-        대전<AddIcon />
-      </Fab>
-      {
-        games ? <>
-          {games.map((game, index) => {
-            return (
-              <Card className='mb-5' key={game._id}>
-                <Stack direction={'col'} spacing={2}>
-                  <span><h2>{game.memo}</h2></span>
-                  <span>
-                    <Fab onClick={() => { delGame(game._id) }} color="error" aria-label="delete">
-                      삭제
-                    </Fab>
-                  </span>
-                </Stack>
-                <p>
-                  {game.game_type === 'nvm' ? '단체전' : '개인전'}
-                </p>
+      <Link to='/creategame'>
+        <Fab color="primary" aria-label="add">
+          대전<AddIcon />
+        </Fab>
+      </Link>
 
-                {/* {--- 1 대전당 게임 리스트 ---} */}
-                {game.games.map((subGame, idx) => {
-                  return (
-                    <div className='mb-5' key={subGame._id}>
-                      <p>{subGame.result === 2 ? <Chip label="시작전" color="primary" /> : subGame.result === 1 ? <Chip label="진행중" color="success" /> : <Chip label="종료" color="error" />}</p>
-                      <Card className='gameCard'>
-                        <Grid container spacing={2}>
-                          <Grid item xs={5.5}>
-                            <Item>
-                              <p>배당 : {subGame.home.rate}</p>
-                              <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
-                            </Item>
-                          </Grid>
-                          <Grid item xs={1}  display="flex" justifyContent="center" alignItems="center" >
-                            <h2>vs</h2>
-                          </Grid>
-                          <Grid item xs={5.5}>
-                            <Item>
-                              <p>배당 : {subGame.away.rate}</p>
-                              <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
-                            </Item>
-                          </Grid>
-
-                        </Grid>
-                        <Button onClick={() => { delMatch(game._id, subGame._id) }} variant='outlined' color="error" aria-label="delete">
+          {
+            games ? <>
+              {games.map((game, index) => {
+                return (
+                  <Card className='mb-5' key={game._id}>
+                    <Stack direction={'col'} spacing={2}>
+                      <span><h2>{game.memo}</h2></span>
+                      <span>
+                        <Fab onClick={() => { delGame(game._id) }} color="error" aria-label="delete">
                           삭제
-                        </Button>
-                        <Button variant='outlined' color="success" aria-label="delete">
-                          수정
-                        </Button>
-                      </Card>
-                    </div>
-                  )
-                })}
+                        </Fab>
+                      </span>
+                    </Stack>
+                    <p>
+                      {game.game_type === 'nvm' ? '단체전' : '개인전'}
+                    </p>
 
-              </Card>
+                    {/* {--- 1 대전당 게임 리스트 ---} */}
+                    {game.games.map((subGame, idx) => {
+                      return (
+                        <div className='mb-5' key={subGame._id}>
+                          <p>{subGame.result === 2 ? <Chip label="시작전" color="primary" /> : subGame.result === 1 ? <Chip label="진행중" color="success" /> : <Chip label="종료" color="error" />}</p>
+                          <Card className='gameCard'>
+                            <Grid container spacing={2}>
+                              <Grid item xs={5.5}>
+                                <Item>
+                                  <p>배당 : {subGame.home.rate}</p>
+                                  <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
+                                </Item>
+                              </Grid>
+                              <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
+                                <h2>vs</h2>
+                              </Grid>
+                              <Grid item xs={5.5}>
+                                <Item>
+                                  <p>배당 : {subGame.away.rate}</p>
+                                  <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
+                                </Item>
+                              </Grid>
 
-            )
-          })}
-        </> : <>..Loading..</>
-      }
-    </>
-  )
+                            </Grid>
+                            <Button onClick={() => { delMatch(game._id, subGame._id) }} variant='outlined' color="error" aria-label="delete">
+                              삭제
+                            </Button>
+                            <Button variant='outlined' color="success" aria-label="delete">
+                              수정
+                            </Button>
+                          </Card>
+                        </div>
+                      )
+                    })}
+
+                  </Card>
+
+                )
+              })}
+            </> : <>..Loading..</>
+          }
+        </>
+        )
 }
 
-export default GameAdmin
+        export default GameAdmin
