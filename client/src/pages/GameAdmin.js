@@ -107,7 +107,7 @@ function GameAdmin() {
           {games.map((game, index) => {
             return (
               <Card className='mb-5' key={game._id}>
-                <Stack direction={'col'} spacing={2}>
+                <Stack direction={'column'} spacing={2}>
                   <span><h2>{game.memo}</h2></span>
                   <span>
                     <Fab onClick={() => { delGame(game._id) }} color="error" aria-label="delete">
@@ -150,8 +150,8 @@ function GameAdmin() {
                           삭제
                         </Button>
                         <Button onClick={async () => {
-                          setToUpdateData(game);
-                          setToUpdateGameId(game._id);
+                          setToUpdateData(subGame);
+                          setToUpdateGameId(subGame._id);
                           handleOpen();
                         }} variant='outlined' color="success" aria-label="delete">
                           수정
