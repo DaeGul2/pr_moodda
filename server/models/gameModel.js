@@ -37,7 +37,7 @@ const subGame = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    win:{type:String,default:'yet', enum:['home','away','yet']}
+    win:{type:String,default:'yet', enum:['home','away','yet','draw']}
 
 }, {
     timestamps: true
