@@ -83,37 +83,38 @@ function Betting() {
 
                                 {/* {--- 1 대전당 게임 리스트 ---} */}
                                 {game.games.map((subGame, idx) => {
-                                    return (
-                                        <Paper elevation={5} key={subGame._id}>
-                                            <div className='mb-5' >
-                                                <span>{subGame.result === 2 ? <><Chip label="시작 전" color="success" />  </> : subGame.result === 1 ? <><Chip label="진행중" color="warning" /> </> : <><Chip label="종료" color="error" /> </>}</span>
-                                                <span>{formatDate(subGame.createdAt) + " 생성됨"}</span>
+    const isBettingEnabled = subGame.result === 2;
 
+    return (
+        <Paper elevation={5} key={subGame._id}>
+            <div className='mb-5' >
+                <span>{isBettingEnabled ? <Chip label="시작 전" color="success" /> : subGame.result === 1 ? <Chip label="진행중" color="warning" /> : <Chip label="종료" color="error" />}</span>
+                <span>{formatDate(subGame.createdAt) + " 생성됨"}</span>
 
-                                                <Card className='gameCard'>
-                                                    <Grid container spacing={2}>
-                                                        <Grid item xs={5.5}>
-                                                            <Item>
-                                                                <p>배당 : {subGame.home.rate}</p>
-                                                                <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
-                                                            </Item>
-                                                        </Grid>
-                                                        <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
-                                                            <h2>vs</h2>
-                                                        </Grid>
-                                                        <Grid item xs={5.5}>
-                                                            <Item>
-                                                                <p>배당 : {subGame.away.rate}</p>
-                                                                <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
-                                                            </Item>
-                                                        </Grid>
-                                                    </Grid>
-                                                    <Button>베팅</Button>
-                                                </Card>
-                                            </div>
-                                        </Paper>
-                                    )
-                                })}
+                <Card className='gameCard'>
+                    <Grid container spacing={2}>
+                        <Grid item xs={5.5}>
+                            <Item>
+                                <p>배당 : {subGame.home.rate}</p>
+                                <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
+                            </Item>
+                        </Grid>
+                        <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
+                            <h2>vs</h2>
+                        </Grid>
+                        <Grid item xs={5.5}>
+                            <Item>
+                                <p>배당 : {subGame.away.rate}</p>
+                                <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
+                            </Item>
+                        </Grid>
+                    </Grid>
+                    <Button disabled={!isBettingEnabled}>베팅</Button>
+                </Card>
+            </div>
+        </Paper>
+    )
+})}
 
                             </Card>
 
