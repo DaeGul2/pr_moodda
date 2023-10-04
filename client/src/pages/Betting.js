@@ -82,9 +82,21 @@ function Betting({ checkedBettings, setCheckedBettings }) {
 
 
     /**--- 베팅리스트 핸들링 ---- */
+
+    const validateCheck = (match_id)=>{
+        const foundBetting = checkedBettings.find((betting) => betting.match_id === match_id);
+
+        // foundBetting은 일치하는 요소 또는 undefined일 수 있음
+        return foundBetting;
+    }
+
     // 베팅 리스트에 추가하는 작업 여기에 쓰면됨.
     const handleAddBettingClick = (info) => {
         // 새로운 베팅 정보 객체 생성
+        if(validateCheck(info.match_id)){
+            alert('이미 존재하는 경기입니다.')
+            return;
+        }
         const newBet = {
             match_id: info.match_id,
             selected_team: info.selected_team,
