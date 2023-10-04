@@ -34,14 +34,14 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-const HoverablePaper = styled(Paper)(({ theme,isBettingEnabled }) => ({
+const HoverablePaper = styled(Paper)(({ theme, isBettingEnabled }) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     color: theme.palette.text.secondary,
     transition: 'background-color 0.3s', // hover 효과를 위한 배경색 전환
     backgroundColor: isBettingEnabled ? '#e0e0e0' : 'inherit', // active 상태에 따라 배경색 변경
     '&:hover': {
-      backgroundColor: isBettingEnabled ? '#e0e0e0' : '#f0f0f0', // hover 시 배경색 변경
+        backgroundColor: isBettingEnabled ? '#e0e0e0' : '#f0f0f0', // hover 시 배경색 변경
     },
 }));
 /*----------------------*/
@@ -83,13 +83,13 @@ function Betting({ checkedBettings, setCheckedBettings }) {
 
 
     /** -- 베팅 체크 --*/
-    
+
     const [isActive, setIsActive] = useState(false);
     /** --------------*/
 
 
     /**--- 베팅리스트 핸들링 ---- */
-
+    // 베팅 리스트에 추가하는 작업 여기에 쓰면됨.
 
 
     /**--------------------- */
@@ -149,7 +149,7 @@ function Betting({ checkedBettings, setCheckedBettings }) {
 
                                                         <Grid item xs={5.5}>
                                                             <HoverablePaper isBettingEnabled={!isBettingEnabled}>
-                                                            {!isBettingEnabled?<p style={{color:'red',fontWeight:'bold'}}>베팅불가</p>:<p style={{color:'green',fontWeight:'bold'}}>베팅가능</p>}
+                                                                {!isBettingEnabled ? <p style={{ color: 'red', fontWeight: 'bold' }}>베팅불가</p> : <p style={{ color: 'green', fontWeight: 'bold' }}>베팅가능</p>}
                                                                 <p>배당 : {subGame.home.rate}</p>
                                                                 <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
 
@@ -160,9 +160,9 @@ function Betting({ checkedBettings, setCheckedBettings }) {
                                                             <h2>vs</h2>
                                                         </Grid>
                                                         <Grid item xs={5.5}>
-                                                            
-                                                            <HoverablePaper  isBettingEnabled={!isBettingEnabled}>
-                                                            {!isBettingEnabled?<p style={{color:'red',fontWeight:'bold'}}>베팅불가</p>:<p style={{color:'green',fontWeight:'bold'}}>베팅가능</p>}
+
+                                                            <HoverablePaper isBettingEnabled={!isBettingEnabled}>
+                                                                {!isBettingEnabled ? <p style={{ color: 'red', fontWeight: 'bold' }}>베팅불가</p> : <p style={{ color: 'green', fontWeight: 'bold' }}>베팅가능</p>}
                                                                 <p>배당 : {subGame.away.rate}</p>
                                                                 <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
                                                             </HoverablePaper>
