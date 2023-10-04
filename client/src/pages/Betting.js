@@ -47,7 +47,7 @@ const HoverablePaper = styled(Paper)(({ theme,isBettingEnabled }) => ({
 /*----------------------*/
 
 
-function Betting({ badgeContentValue, setBadgeContentValue }) {
+function Betting({ badgeContentValue, setBadgeContentValue, checkedBettings, setCheckedBettings }) {
 
     /**--베팅 Modal창--- */
     const style = {
@@ -83,11 +83,16 @@ function Betting({ badgeContentValue, setBadgeContentValue }) {
 
 
     /** -- 베팅 체크 --*/
-    const [checkedBettings, setCheckedBettings] = useState([]);
+    
     const [isActive, setIsActive] = useState(false);
     /** --------------*/
 
 
+    /**--- 베팅리스트 핸들링 ---- */
+
+
+
+    /**--------------------- */
 
 
     /**페이지네이션 */

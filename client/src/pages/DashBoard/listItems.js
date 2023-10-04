@@ -21,7 +21,7 @@ import BettingList from '../BettingList';
 
 
 
-export const mainListItems = (badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose) => (
+export const mainListItems = (badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose, checkedBettings) => (
 
   <React.Fragment>
     <ListItemButton>

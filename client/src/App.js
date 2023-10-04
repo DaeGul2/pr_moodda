@@ -109,6 +109,7 @@ const defaultTheme = createTheme({
 
 
 function App() {
+  const [checkedBettings, setCheckedBettings] = React.useState([]);
   const [badgeContentValue, setBadgeContentValue] = React.useState(1);
   const [open, setOpen] = React.useState(true);
   
@@ -140,7 +141,7 @@ function App() {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={{ ...style, width: 1000 }}>
-                    <BettingList></BettingList>
+                    <BettingList checkedBettings={checkedBettings} setCheckedBettings={setCheckedBettings}></BettingList>
                 </Box>
             </Modal>
       <ThemeProvider theme={defaultTheme}>
@@ -195,7 +196,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List component="nav">
-              {mainListItems(badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose )}
+              {mainListItems(badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose, checkedBettings )}
               <Divider sx={{ my: 1 }} />
 
             </List>
@@ -215,7 +216,7 @@ function App() {
             <Toolbar />
             {/**컨텐츠 들어가는 곳 */}
             <Routes>
-              <Route path="/betting" element={<Betting badgeContentValue={badgeContentValue} setBadgeContentValue={setBadgeContentValue}></Betting>}></Route>
+              <Route path="/betting" element={<Betting badgeContentValue={badgeContentValue} setBadgeContentValue={setBadgeContentValue} checkedBettings={checkedBettings} setCheckedBettings={setCheckedBettings}></Betting>}></Route>
               <Route path="/dashboard" element={<Dashboard ></Dashboard>}></Route>
               <Route path="/signup" element={<SignUp ></SignUp>}></Route>
               <Route path="/deposits" element={<Deposits ></Deposits>}></Route>
