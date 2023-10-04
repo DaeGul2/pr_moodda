@@ -18,22 +18,25 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
 }));
-function UpdateGame({ data, gameId, matchId }) {
+function UpdateGame({ data, gameId, matchId,playerInfo,rateInfo }) {
     const [players, setPlayers] = useState([]);
-    const [formData, setFormData] = useState(data)
+    const [formData, setFormData] = useState(data || {})
     useEffect(() => {
         getAllPlayers()
             .then((data) => {
 
                 // 가져온 선수 데이터를 players 상태에 설정
                 setPlayers(data);
+                
 
             })
             .catch((error) => {
                 console.error("선수 데이터를 가져오는 중 오류 발생:", error);
             });
-        console.log("formData", formData)
+        console.log("formData", formData,playerInfo,rateInfo)
     }, [])
+
+    
 
     const defaultProps = {
         options: players,

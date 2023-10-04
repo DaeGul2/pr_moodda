@@ -11,14 +11,17 @@ import AssignmentIcon from '@mui/icons-material/Assignment';
 import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
+import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import { Link } from 'react-router-dom';
 import './listItem.css';
+import Badge from '@mui/material/Badge';
 
-export const mainListItems = (
+
+export const mainListItems = (badgeContentValue)=>(
   <React.Fragment>
     <ListItemButton>
       <ListItemIcon>
-        <AutoAwesomeMosaicIcon/>
+        <AutoAwesomeMosaicIcon />
       </ListItemIcon>
       <Link to="/dashboard"><ListItemText primary="대쉬보드" /></Link>
     </ListItemButton>
@@ -30,7 +33,7 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <VideogameAssetIcon />
       </ListItemIcon>
       <Link to="/betting"><ListItemText primary="경기" /></Link>
     </ListItemButton>
@@ -63,6 +66,12 @@ export const mainListItems = (
         <SettingsIcon />
       </ListItemIcon>
       <Link to="/admin/game"><ListItemText primary="대전 관리" /></Link>
+    </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <Badge badgeContent={badgeContentValue} color="primary">  <ShoppingCartIcon></ShoppingCartIcon></Badge>
+      </ListItemIcon>
+      <ListItemText primary="베팅카트" />
     </ListItemButton>
   </React.Fragment>
 );

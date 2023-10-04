@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import UpdateGame from './UpdateGame';
 import Modal from '@mui/material/Modal';
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 
 
@@ -54,6 +56,8 @@ function GameAdmin() {
   const [toUpdateData, setToUpdateData] = useState(null);
   const [toUpdateGameId, setToUpdateGameId] = useState(null);
   const [toUpdateMatchId, setToUpdateMatchId] = useState(null);
+  const [toUpdatePlayerId, setToUpdatePlayerid] = useState(null);
+  const [toUpdateRate, setToUpdateRate] = useState(null);
   const [games, setGames] = useState(null);
 
   /**페이지네이션 */
@@ -83,6 +87,7 @@ function GameAdmin() {
         .then((res) => {
           console.log(res);
           alert('업데이트 성공');
+          setIsChanged(!isChanged);
         })
         .catch(e => alert(e));
     }
@@ -124,7 +129,7 @@ function GameAdmin() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, width: 1000 }}>
-          <UpdateGame data={toUpdateData} matchId={toUpdateMatchId} gameId={toUpdateGameId}></UpdateGame>
+          <UpdateGame data={toUpdateData} matchId={toUpdateMatchId} gameId={toUpdateGameId} playerInfo={toUpdatePlayerId} rateInfo={toUpdateRate}></UpdateGame>
         </Box>
       </Modal>
       <br />
@@ -142,9 +147,9 @@ function GameAdmin() {
                 <Stack direction={'column'} spacing={2}>
                   <span><h2>{game.memo}</h2></span>
                   <span>
-                    <Button variant='outlined' onClick={() => { delGame(game._id) }} color="error" aria-label="delete">
-                      <b>대전 삭제</b>
-                    </Button>
+                    <IconButton  onClick={() => { delGame(game._id) }} color="error" aria-label="delete" size="large">
+                      <DeleteIcon />
+                    </IconButton>
                   </span>
                   <hr />
                 </Stack>
@@ -188,6 +193,8 @@ function GameAdmin() {
                             setToUpdateData(subGame);
                             setToUpdateGameId(game._id);
                             setToUpdateMatchId(subGame._id)
+                            setToUpdatePlayerid({ home: subGame.home._id, away: subGame.away._id })
+                            setToUpdateRate({ home: subGame.home.rate, away: subGame.away.rate })
                             handleOpen();
                           }} variant='outlined' color="success" aria-label="delete">
                             매치 수정

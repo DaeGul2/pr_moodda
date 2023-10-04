@@ -27,6 +27,7 @@ import SignUp from './pages/SignUp'
 import Admin from './pages/Admin';
 
 
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -104,6 +105,7 @@ const defaultTheme = createTheme({
 
 
 function App() {
+  const [badgeContentValue, setBadgeContentValue] = React.useState(1);
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
@@ -162,7 +164,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List component="nav">
-              {mainListItems}
+              {mainListItems(badgeContentValue)}
               <Divider sx={{ my: 1 }} />
 
             </List>
@@ -182,7 +184,7 @@ function App() {
             <Toolbar />
             {/**컨텐츠 들어가는 곳 */}
             <Routes>
-              <Route path="/betting" element={<Betting ></Betting>}></Route>
+              <Route path="/betting" element={<Betting badgeContentValue={badgeContentValue} setBadgeContentValue={setBadgeContentValue}></Betting>}></Route>
               <Route path="/dashboard" element={<Dashboard ></Dashboard>}></Route>
               <Route path="/signup" element={<SignUp ></SignUp>}></Route>
               <Route path="/deposits" element={<Deposits ></Deposits>}></Route>

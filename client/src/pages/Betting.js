@@ -2,10 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap';
 import AddIcon from '@mui/icons-material/Add';
 import Chip from '@mui/material/Chip';
-import { Grid, Paper, Fab, Stack, Button, Box, ButtonGroup, Pagination } from '@mui/material'
+import { Grid, Modal, Paper, Fab, Stack, Button, Box, ButtonGroup, Pagination } from '@mui/material'
 import { styled } from '@mui/material/styles';
 import { getGames, updateMatch, deleteGame, deleteMatch } from '../api/gameAPI';
 import dayjs from 'dayjs';
+
+
+const BettingModal = ({ subGame, checkedBettings, setCheckedBettings }) => {
+
+    return (
+        <>
+
+        </>
+    )
+}
 
 
 
@@ -25,7 +35,28 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 
-function Betting() {
+function Betting({badgeContentValue ,setBadgeContentValue}) {
+
+    /**--베팅 Modal창--- */
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => {setOpen(false)};
+    /*------------------*/
+
+
+
+
     /**------game 불러오기------ */
     const [games, setGames] = useState(null);
     const [isChanged, setIsChanged] = useState(false);
@@ -60,7 +91,16 @@ function Betting() {
 
     return (
         <Paper className='p-3'>
-
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{ ...style, width: 1000 }}>
+                    <BettingModal></BettingModal>
+                </Box>
+            </Modal>
 
             {
                 games ? <>
@@ -104,7 +144,7 @@ function Betting() {
                                                             </Item>
                                                         </Grid>
                                                     </Grid>
-                                                    <Button disabled={!isBettingEnabled}>베팅</Button>
+                                                    <Button onClick={handleOpen} disabled={!isBettingEnabled}>베팅</Button>
                                                 </Card>
                                             </div>
                                         </Paper>
