@@ -47,7 +47,7 @@ const HoverablePaper = styled(Paper)(({ theme,isBettingEnabled }) => ({
 /*----------------------*/
 
 
-function Betting({ badgeContentValue, setBadgeContentValue, checkedBettings, setCheckedBettings }) {
+function Betting({ checkedBettings, setCheckedBettings }) {
 
     /**--베팅 Modal창--- */
     const style = {

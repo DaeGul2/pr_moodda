@@ -110,7 +110,7 @@ const defaultTheme = createTheme({
 
 function App() {
   const [checkedBettings, setCheckedBettings] = React.useState([]);
-  const [badgeContentValue, setBadgeContentValue] = React.useState(1);
+
   const [open, setOpen] = React.useState(true);
   
     /**--베팅 Modal창--- */
@@ -175,7 +175,7 @@ function App() {
                 Dashboard
               </Typography>
               <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
+                <Badge badgeContent={checkedBettings} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
@@ -196,7 +196,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List component="nav">
-              {mainListItems(badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose, checkedBettings )}
+              {mainListItems(checkedBettings.length, modalOpen, setModalOpen, handleOpen, handleClose, checkedBettings )}
               <Divider sx={{ my: 1 }} />
 
             </List>
@@ -216,7 +216,7 @@ function App() {
             <Toolbar />
             {/**컨텐츠 들어가는 곳 */}
             <Routes>
-              <Route path="/betting" element={<Betting badgeContentValue={badgeContentValue} setBadgeContentValue={setBadgeContentValue} checkedBettings={checkedBettings} setCheckedBettings={setCheckedBettings}></Betting>}></Route>
+              <Route path="/betting" element={<Betting checkedBettings={checkedBettings} setCheckedBettings={setCheckedBettings}></Betting>}></Route>
               <Route path="/dashboard" element={<Dashboard ></Dashboard>}></Route>
               <Route path="/signup" element={<SignUp ></SignUp>}></Route>
               <Route path="/deposits" element={<Deposits ></Deposits>}></Route>
