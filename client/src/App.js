@@ -175,7 +175,7 @@ function App() {
                 Dashboard
               </Typography>
               <IconButton color="inherit">
-                <Badge badgeContent={checkedBettings} color="secondary">
+                <Badge badgeContent={checkedBettings.length} color="secondary">
                   <NotificationsIcon />
                 </Badge>
               </IconButton>
