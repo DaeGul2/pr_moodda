@@ -15,9 +15,14 @@ import VideogameAssetIcon from '@mui/icons-material/VideogameAsset';
 import { Link } from 'react-router-dom';
 import './listItem.css';
 import Badge from '@mui/material/Badge';
+import { Modal } from '@mui/material'
+import BettingList from '../BettingList';
 
 
-export const mainListItems = (badgeContentValue)=>(
+
+
+export const mainListItems = (badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose) => (
+
   <React.Fragment>
     <ListItemButton>
       <ListItemIcon>
@@ -67,8 +72,8 @@ export const mainListItems = (badgeContentValue)=>(
       </ListItemIcon>
       <Link to="/admin/game"><ListItemText primary="대전 관리" /></Link>
     </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
+    <ListItemButton onClick={() => { handleOpen() }}>
+      <ListItemIcon >
         <Badge badgeContent={badgeContentValue} color="primary">  <ShoppingCartIcon></ShoppingCartIcon></Badge>
       </ListItemIcon>
       <ListItemText primary="베팅카트" />

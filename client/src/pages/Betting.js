@@ -25,6 +25,7 @@ function formatDate(inputDate) {
     return formattedDate;
 }
 
+/**-----커스텀 스타일-------------- */
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -33,9 +34,20 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
+const HoverablePaper = styled(Paper)(({ theme,isBettingEnabled }) => ({
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+    transition: 'background-color 0.3s', // hover 효과를 위한 배경색 전환
+    backgroundColor: isBettingEnabled ? '#e0e0e0' : 'inherit', // active 상태에 따라 배경색 변경
+    '&:hover': {
+      backgroundColor: isBettingEnabled ? '#e0e0e0' : '#f0f0f0', // hover 시 배경색 변경
+    },
+}));
+/*----------------------*/
 
 
-function Betting({badgeContentValue ,setBadgeContentValue}) {
+function Betting({ badgeContentValue, setBadgeContentValue }) {
 
     /**--베팅 Modal창--- */
     const style = {
@@ -51,7 +63,7 @@ function Betting({badgeContentValue ,setBadgeContentValue}) {
     };
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
-    const handleClose = () => {setOpen(false)};
+    const handleClose = () => { setOpen(false) };
     /*------------------*/
 
 
@@ -72,7 +84,7 @@ function Betting({badgeContentValue ,setBadgeContentValue}) {
 
     /** -- 베팅 체크 --*/
     const [checkedBettings, setCheckedBettings] = useState([]);
-
+    const [isActive, setIsActive] = useState(false);
     /** --------------*/
 
 
@@ -86,6 +98,7 @@ function Betting({badgeContentValue ,setBadgeContentValue}) {
         setCurrentPlayerPage(value);
     };
     /*---*/
+
 
 
 
@@ -128,20 +141,26 @@ function Betting({badgeContentValue ,setBadgeContentValue}) {
 
                                                 <Card className='gameCard'>
                                                     <Grid container spacing={2}>
+
                                                         <Grid item xs={5.5}>
-                                                            <Item>
+                                                            <HoverablePaper isBettingEnabled={!isBettingEnabled}>
+                                                            {!isBettingEnabled?<p style={{color:'red',fontWeight:'bold'}}>베팅불가</p>:<p style={{color:'green',fontWeight:'bold'}}>베팅가능</p>}
                                                                 <p>배당 : {subGame.home.rate}</p>
                                                                 <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
-                                                            </Item>
+
+                                                            </HoverablePaper>
                                                         </Grid>
+
                                                         <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
                                                             <h2>vs</h2>
                                                         </Grid>
                                                         <Grid item xs={5.5}>
-                                                            <Item>
+                                                            
+                                                            <HoverablePaper  isBettingEnabled={!isBettingEnabled}>
+                                                            {!isBettingEnabled?<p style={{color:'red',fontWeight:'bold'}}>베팅불가</p>:<p style={{color:'green',fontWeight:'bold'}}>베팅가능</p>}
                                                                 <p>배당 : {subGame.away.rate}</p>
                                                                 <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
-                                                            </Item>
+                                                            </HoverablePaper>
                                                         </Grid>
                                                     </Grid>
                                                     <Button onClick={handleOpen} disabled={!isBettingEnabled}>베팅</Button>

@@ -25,7 +25,8 @@ import Orders from './pages/DashBoard/Orders';
 import Title from './pages/DashBoard/Title';
 import SignUp from './pages/SignUp'
 import Admin from './pages/Admin';
-
+import { Modal } from '@mui/material'
+import BettingList from './pages/BettingList';
 
 
 import {
@@ -36,6 +37,7 @@ import {
 import GameAdmin from './pages/GameAdmin';
 import CreateGame from './pages/CreateGame';
 import Betting from './pages/Betting';
+
 
 function Copyright(props) {
   return (
@@ -51,6 +53,8 @@ function Copyright(props) {
 }
 
 const drawerWidth = 240;
+
+
 
 const AppBar = styled(MuiAppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -107,11 +111,38 @@ const defaultTheme = createTheme({
 function App() {
   const [badgeContentValue, setBadgeContentValue] = React.useState(1);
   const [open, setOpen] = React.useState(true);
+  
+    /**--베팅 Modal창--- */
+    const style = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 400,
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+  };
+  const [modalOpen, setModalOpen] = React.useState(false);
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => { setModalOpen(false) };
+  /*------------------*/
   const toggleDrawer = () => {
-    setOpen(!open);
+    setOpen(!modalOpen);
   };
   return (
     <Router>
+        <Modal
+                open={modalOpen}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{ ...style, width: 1000 }}>
+                    <BettingList></BettingList>
+                </Box>
+            </Modal>
       <ThemeProvider theme={defaultTheme}>
         <Box sx={{ display: 'flex' }}>
           <CssBaseline />
@@ -164,7 +195,7 @@ function App() {
             </Toolbar>
             <Divider />
             <List component="nav">
-              {mainListItems(badgeContentValue)}
+              {mainListItems(badgeContentValue, modalOpen, setModalOpen, handleOpen, handleClose )}
               <Divider sx={{ my: 1 }} />
 
             </List>
