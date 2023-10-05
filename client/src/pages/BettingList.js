@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Pagination, Card, Container, Table, TableBody, TableCell, TableHead, TableRow, Stack, Button } from '@mui/material';
+import { Pagination, Badge, Card, Container, Table, TableBody, TableCell, TableHead, TableRow, Stack, Button } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Title from './DashBoard/Title';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -28,6 +28,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
         // 문자열을 다시 숫자로 변환
         setFinalRate( parseFloat(formattedTotalRate));
         setPredict(finalRate*betPoints)
+
     }, [betPoints, isChanged])
 
     function removeCheckedBettingByMatchId(matchId) {
@@ -49,8 +50,17 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
 
     /*--베팅 등록 API-*/
       const createBet = ()=>{
+        if(betPoints<1000){
+            alert('기본 1000포인트 이상 베팅해야합니다.');
+            return;
+        }
+        if(betPoints>userInfo.points){
+            alert('보유하고 있는 포인트보다 많은 금액을 베팅할 수 없습니다.');
+            return;
+        }
 
-
+        console.log("checkedBettings:",checkedBettings)
+        console.log("predict:",predict);
 
 
       }
@@ -89,7 +99,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
                                 </TableBody>
                             </Table>
                         </Card>
-                        <span>배 당 : {finalRate}배</span> <p>예상 당첨금액 : {predict}p</p>
+                        <span>배 당 : {finalRate}배</span> <p>예상 당첨금액 : {Math.round(predict)}p</p>
 
                         <TextField
                             id="outlined-number"
@@ -101,6 +111,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
                                 shrink: true,
                             }}
                         />
+                       <Button onClick={()=>{createBet()}} color="success">베팅</Button>
                     </Container>
 
 

@@ -6,7 +6,7 @@ exports.createBet = async (req,res)=>{
     try {
         // 사용자로부터 게임 ID, 베팅한 팀, 베팅 금액을 받아옵니다.
         const {user_id,points} = req.query;
-        const {sub_bettings} = req.body;
+        const {sub_bettings,predict} = req.body;
         console.log(sub_bettings);
         // 게임의 결과가 2 (진행 전)인지 확인
         
@@ -46,6 +46,7 @@ exports.createBet = async (req,res)=>{
           user_id,
           sub_bettings,
           points,
+          predict
         });
     
         // 베팅 정보를 저장하고 사용자의 포인트 차감

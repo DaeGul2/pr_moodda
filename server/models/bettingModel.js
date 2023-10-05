@@ -12,6 +12,18 @@ const subBettingSchema = new mongoose.Schema({
         type:String,
         required: true,
         enum : ['home','away']
+    },
+    rate:{
+        type:Number,
+        required : true
+    },
+    player_name:{
+        type:String,
+        required:true
+    },
+    opponent:{
+        type:String,
+        required:true
     }
 })
 
@@ -27,6 +39,10 @@ const bettingSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    predict:{
+        type:Number,
+        required: true
+    }
 
 },{
     timestamps:true
