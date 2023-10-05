@@ -9,7 +9,7 @@ export const createBetting = async (user_id, points,newBetting) => {
 
     }
     catch (e) {
-        throw new Error('베팅하는 중 오류 발생')
+        throw new Error(`베팅하는 중 오류 발생 `)
     }
 
 

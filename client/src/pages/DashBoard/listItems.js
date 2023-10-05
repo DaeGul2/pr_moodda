@@ -72,6 +72,12 @@ export const mainListItems = (badgeContentValue, modalOpen, setModalOpen, handle
       </ListItemIcon>
       <Link to="/admin/game"><ListItemText primary="대전 관리" /></Link>
     </ListItemButton>
+    <ListItemButton>
+      <ListItemIcon>
+        <SettingsIcon />
+      </ListItemIcon>
+      <Link to="/admin/betting"><ListItemText primary="베팅 관리" /></Link>
+    </ListItemButton>
     <ListItemButton onClick={() => { handleOpen() }}>
       <ListItemIcon >
         <Badge badgeContent={badgeContentValue} color="primary">  <ShoppingCartIcon></ShoppingCartIcon></Badge>

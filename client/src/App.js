@@ -27,6 +27,7 @@ import SignUp from './pages/SignUp'
 import Admin from './pages/Admin';
 import { Modal } from '@mui/material'
 import BettingList from './pages/BettingList';
+import BettingAdmin from './pages/BettingAdmin';
 
 
 import {
@@ -225,6 +226,7 @@ function App() {
               <Route path="/admin" element={<Admin ></Admin>}></Route>
               <Route path="/title" element={<Title children={<>hi</>} ></Title>}></Route>
               <Route path="/admin/game" element={<GameAdmin></GameAdmin>}></Route>
+              <Route path="/admin/betting" element={<BettingAdmin></BettingAdmin>}></Route>
               <Route path="/creategame" element={<CreateGame ></CreateGame>}></Route>
             </Routes>
             {/**----------------- */}
