@@ -83,7 +83,7 @@ function Betting({ checkedBettings, setCheckedBettings }) {
 
     /**--- 베팅리스트 핸들링 ---- */
 
-    const validateCheck = (match_id)=>{
+    const validateCheck = (match_id) => {
         const foundBetting = checkedBettings.find((betting) => betting.match_id === match_id);
 
         // foundBetting은 일치하는 요소 또는 undefined일 수 있음
@@ -93,7 +93,7 @@ function Betting({ checkedBettings, setCheckedBettings }) {
     // 베팅 리스트에 추가하는 작업 여기에 쓰면됨.
     const handleAddBettingClick = (info) => {
         // 새로운 베팅 정보 객체 생성
-        if(validateCheck(info.match_id)){
+        if (validateCheck(info.match_id)) {
             alert('이미 존재하는 경기입니다.')
             return;
         }
@@ -102,13 +102,13 @@ function Betting({ checkedBettings, setCheckedBettings }) {
             selected_team: info.selected_team,
             player_name: info.player_name,
             rate: info.rate,
-            opponent:info.opponent
+            opponent: info.opponent
         };
-    
+
         // 기존의 checkedBettings 배열과 새로운 베팅 정보를 합친 새 배열 생성
         const updatedBettings = [...checkedBettings, newBet];
         console.log(updatedBettings)
-    
+
         // setCheckedBettings 함수를 사용하여 새로운 배열로 업데이트
         setCheckedBettings(updatedBettings);
         alert('추가되었습니다.');
@@ -135,7 +135,7 @@ function Betting({ checkedBettings, setCheckedBettings }) {
 
     return (
         <Paper className='p-3'>
-           
+
             {
                 games ? <>
                     {games.map((game, index) => {
@@ -164,12 +164,28 @@ function Betting({ checkedBettings, setCheckedBettings }) {
                                                     <Grid container spacing={2}>
 
                                                         <Grid item xs={5.5}>
-                                                            <HoverablePaper isBettingEnabled={!isBettingEnabled} onClick={() => { handleAddBettingClick({ match_id: subGame._id, selected_team: "home",opponent:subGame.away.player_name, player_name: subGame.home.player_name, rate: subGame.home.rate }) }}>
-                                                                {!isBettingEnabled ? <p style={{ color: 'red', fontWeight: 'bold' }}>베팅불가</p> : <p style={{ color: 'green', fontWeight: 'bold' }}>베팅가능</p>}
+                                                            <HoverablePaper
+                                                                onClick={() => {
+                                                                    if (isBettingEnabled) {
+                                                                        handleAddBettingClick({
+                                                                            match_id: subGame._id,
+                                                                            selected_team: "home",
+                                                                            opponent: subGame.away.player_name,
+                                                                            player_name: subGame.home.player_name,
+                                                                            rate: subGame.home.rate,
+                                                                        });
+                                                                    }
+                                                                }}
+                                                            >
+                                                                {!isBettingEnabled ? (
+                                                                    <p style={{ color: 'red', fontWeight: 'bold' }}>베팅불가</p>
+                                                                ) : (
+                                                                    <p style={{ color: 'green', fontWeight: 'bold' }}>베팅가능</p>
+                                                                )}
                                                                 <p>배당 : {subGame.home.rate}</p>
                                                                 <p> 홈 : {subGame.home.player_name}{`(${subGame.home.player_tear}, ${subGame.home.player_uni})`}</p>
-
                                                             </HoverablePaper>
+
                                                         </Grid>
 
                                                         <Grid item xs={1} display="flex" justifyContent="center" alignItems="center" >
@@ -177,7 +193,9 @@ function Betting({ checkedBettings, setCheckedBettings }) {
                                                         </Grid>
                                                         <Grid item xs={5.5}>
 
-                                                            <HoverablePaper isBettingEnabled={!isBettingEnabled} onClick={() => { handleAddBettingClick({ match_id: subGame._id, selected_team: "away",opponent:subGame.home.player_name, player_name: subGame.away.player_name, rate: subGame.away.rate }) }}>
+                                                            <HoverablePaper isBettingEnabled={!isBettingEnabled} onClick={() => { 
+                                                                 if (isBettingEnabled) {
+                                                                handleAddBettingClick({ match_id: subGame._id, selected_team: "away", opponent: subGame.home.player_name, player_name: subGame.away.player_name, rate: subGame.away.rate }) }}}>
                                                                 {!isBettingEnabled ? <p style={{ color: 'red', fontWeight: 'bold' }}>베팅불가</p> : <p style={{ color: 'green', fontWeight: 'bold' }}>베팅가능</p>}
                                                                 <p>배당 : {subGame.away.rate}</p>
                                                                 <p> 어웨이 : {subGame.away.player_name}{`(${subGame.away.player_tear}, ${subGame.away.player_uni})`}</p>
