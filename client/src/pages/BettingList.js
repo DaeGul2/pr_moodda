@@ -84,7 +84,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
 
     return (
         <div>
-            {checkedBettings ?
+            {checkedBettings.length>0 ?
                 <>
                     <Container>
                         <Card className="mt-3 pt-3">
