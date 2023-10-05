@@ -5,8 +5,10 @@ import Title from './DashBoard/Title';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import TextField from '@mui/material/TextField';
 import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
+import { createBetting } from '../api/bettingAPI';
 
 function BettingList({ checkedBettings, setCheckedBettings }) {
+    const [userInfo, setUserInfo] = useState({user_id:"singha96",points:30000});
     const [isChanged, setIsChanged] = useState(false);
     const [finalRate, setFinalRate] = useState(1);
     const [predict, setPredict] = useState('');
@@ -42,13 +44,28 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
         return checkedBettings;
       }
 
+
+
+
+    /*--베팅 등록 API-*/
+      const createBet = ()=>{
+
+
+
+
+      }
+
+
+    /*------------------------*/
+
     return (
         <div>
             {checkedBettings ?
                 <>
                     <Container>
                         <Card className="mt-3 pt-3">
-                            <Title>베팅<ShoppingCartIcon></ShoppingCartIcon></Title>
+                            <Title>베팅<ShoppingCartIcon></ShoppingCartIcon> </Title>
+                            <span style={{fontWeight:'bold',color:'blue'}}>보유 : {userInfo.points}p</span>
                             <Table size="small">
                                 <TableHead>
                                     <TableRow>
@@ -72,7 +89,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
                                 </TableBody>
                             </Table>
                         </Card>
-                        <span>배 당 : {finalRate}배</span> <p>예상 당첨금액 : {predict}</p>
+                        <span>배 당 : {finalRate}배</span> <p>예상 당첨금액 : {predict}p</p>
 
                         <TextField
                             id="outlined-number"
