@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { Pagination, Card, Container, Table, TableBody, TableCell, TableHead, TableRow, Stack } from '@mui/material';
+import { Pagination, Card, Container, Table, TableBody, TableCell, TableHead, TableRow, Stack, Button } from '@mui/material';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Title from './DashBoard/Title';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import TextField from '@mui/material/TextField';
+import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 
 function BettingList({ checkedBettings, setCheckedBettings }) {
     const [isChanged, setIsChanged] = useState(false);
@@ -25,7 +26,22 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
         // 문자열을 다시 숫자로 변환
         setFinalRate( parseFloat(formattedTotalRate));
         setPredict(finalRate*betPoints)
-    }, [betPoints])
+    }, [betPoints, isChanged])
+
+    function removeCheckedBettingByMatchId(matchId) {
+        // checkedBettings 배열에서 match_id가 matchId인 요소의 인덱스를 찾습니다.
+        const index = checkedBettings.findIndex((betting) => betting.match_id === matchId);
+      
+        // 요소를 찾았다면 해당 요소를 삭제합니다.
+        if (index !== -1) {
+          checkedBettings.splice(index, 1);
+          setIsChanged(!isChanged);
+        }
+      
+        // 변경된 배열을 반환합니다.
+        return checkedBettings;
+      }
+
     return (
         <div>
             {checkedBettings ?
@@ -39,6 +55,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
                                         <TableCell>Pick</TableCell>
                                         <TableCell>vs 상대방</TableCell>
                                         <TableCell>배당</TableCell>
+                                        <TableCell>삭제</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -48,6 +65,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
                                                 <TableCell>{row.player_name}<CheckCircleIcon></CheckCircleIcon></TableCell>
                                                 <TableCell>{row.opponent}</TableCell>
                                                 <TableCell>{row.rate}</TableCell>
+                                                <TableCell><Button color='error' onClick={()=>{removeCheckedBettingByMatchId(row.match_id)}}><DeleteForeverSharpIcon></DeleteForeverSharpIcon></Button></TableCell>
                                             </TableRow>
                                         )
                                     })}

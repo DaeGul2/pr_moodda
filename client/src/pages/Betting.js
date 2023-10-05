@@ -111,6 +111,7 @@ function Betting({ checkedBettings, setCheckedBettings }) {
     
         // setCheckedBettings 함수를 사용하여 새로운 배열로 업데이트
         setCheckedBettings(updatedBettings);
+        alert('추가되었습니다.');
     }
 
     const handleDeleteBettingClick = (index) => {
