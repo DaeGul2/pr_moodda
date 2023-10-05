@@ -8,7 +8,7 @@ import DeleteForeverSharpIcon from '@mui/icons-material/DeleteForeverSharp';
 import { createBetting } from '../api/bettingAPI';
 
 function BettingList({ checkedBettings, setCheckedBettings }) {
-    const [userInfo, setUserInfo] = useState({user_id:"singha96",points:30000});
+    const [userInfo, setUserInfo] = useState({user_id:"65133996f7f3bbbdea977b19",points:30000});
     const [isChanged, setIsChanged] = useState(false);
     const [finalRate, setFinalRate] = useState(1);
     const [predict, setPredict] = useState('');
@@ -49,7 +49,7 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
 
 
     /*--베팅 등록 API-*/
-      const createBet = ()=>{
+      const createBet = async ()=>{
         if(betPoints<1000){
             alert('기본 1000포인트 이상 베팅해야합니다.');
             return;
@@ -58,9 +58,23 @@ function BettingList({ checkedBettings, setCheckedBettings }) {
             alert('보유하고 있는 포인트보다 많은 금액을 베팅할 수 없습니다.');
             return;
         }
+        
+        const newBet = {
+            sub_bettings : checkedBettings,
+            predict: predict
+        }
+        
+        try{
+            const response = await createBetting(userInfo.user_id, betPoints, newBet);
+            alert('베팅 완료');
+            setCheckedBettings([]);
+            setPredict('');
+            setBetPoints(0);
+            setIsChanged(!isChanged);
+            setFinalRate(1);
 
-        console.log("checkedBettings:",checkedBettings)
-        console.log("predict:",predict);
+        }
+        catch(e){alert(e)}
 
 
       }
