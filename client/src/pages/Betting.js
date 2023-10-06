@@ -164,7 +164,7 @@ function Betting({ checkedBettings, setCheckedBettings }) {
                                                     <Grid container spacing={2}>
 
                                                         <Grid item xs={5.5}>
-                                                            <HoverablePaper
+                                                            <HoverablePaper isBettingEnabled={!isBettingEnabled}
                                                                 onClick={() => {
                                                                     if (isBettingEnabled) {
                                                                         handleAddBettingClick({
