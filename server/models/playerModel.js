@@ -24,7 +24,7 @@ const playerSchema = new mongoose.Schema({
     },
 });
 
-// Post 모델 생성
+
 const Player = mongoose.model('Player', playerSchema,'players');
 
 module.exports = Player; 
