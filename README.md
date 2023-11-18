@@ -48,9 +48,220 @@ ex)
 - 데이터베이스 : MongoDB 
 
 ### 2. 데이터베이스 
+1) 전체 구조
 ![image](https://github.com/DaeGul2/pr_moodda/assets/122341071/e7a9d455-12cf-4df7-b4ad-d0e9d913ae6f)
 
-  
+2) 각 모델 스키마
+
+<베팅 모델>
+```
+const mongoose = require('mongoose');
+
+
+
+const subBettingSchema = new mongoose.Schema({
+    match_id : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Game',
+        required: true,
+    },
+    selected_team : {
+        type:String,
+        required: true,
+        enum : ['home','away']
+    },
+    rate:{
+        type:Number,
+        required : true
+    },
+    player_name:{
+        type:String,
+        required:true
+    },
+    opponent:{
+        type:String,
+        required:true
+    }
+})
+
+const bettingSchema = new mongoose.Schema({
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', // 'User'는 users 컬렉션의 모델명입니다.
+        required: true,
+    },
+    sub_bettings: [subBettingSchema]
+    ,
+    points: {
+        type: Number,
+        required: true,
+    },
+    predict:{
+        type:Number,
+        required: true
+    }
+
+},{
+    timestamps:true
+});
+
+const Betting = mongoose.model('Betting', bettingSchema);
+
+module.exports = Betting;
+```
+
+
+<게임 모델>
+```
+const mongoose = require('mongoose');
+
+
+const playerSchema = new mongoose.Schema({
+    player_name: {
+        type: String,
+        required: true,
+    },
+    player_uni: {
+        type: String,
+        required: true,
+    },
+     player_tear: {
+        type: String,
+        required: true,
+    },
+     player_tpz: {
+        type: String,
+        required: true,
+    },
+     sex: {
+        type: String,
+        required: true,
+    },
+    
+    rate:{type:Number}
+});
+
+const subGame = new mongoose.Schema({
+    home: { type:playerSchema},
+    away: { type:playerSchema},
+    result: {
+        type: Number,
+        default: 2 // 0 종료 1 진행중 2 진행 전
+    },
+    isPayed:{
+        type:Boolean,
+        default:false
+    },
+    win:{type:String,default:'yet', enum:['home','away','yet','draw']}
+
+}, {
+    timestamps: true
+})
+
+// 선수 모델의 스키마 정의
+const gameSchema = new mongoose.Schema({
+    game_type: {
+        type: String,   
+        required: true,
+        enum: ['1v1', 'nvm']
+    },
+    memo: {
+        type: String,
+    },
+    games: [subGame],
+
+
+
+});
+
+// Post 모델 생성
+const Game = mongoose.model('Game', gameSchema, 'games');
+
+module.exports = Game;
+```
+
+<선수 모델>
+```
+const mongoose = require('mongoose');
+
+// 선수 모델의 스키마 정의
+const playerSchema = new mongoose.Schema({
+    player_name: {
+        type: String,
+        required: true,
+    },
+    player_uni: {
+        type: String,
+        required: true,
+    },
+     player_tear: {
+        type: String,
+        required: true,
+    },
+     player_tpz: {
+        type: String,
+        required: true,
+    },
+     sex: {
+        type: String,
+        required: true,
+    },
+});
+
+
+const Player = mongoose.model('Player', playerSchema,'players');
+
+module.exports = Player;
+```
+
+<유저 모델>
+```
+const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
+
+const userSchema = new mongoose.Schema({
+  user_id: {
+    type: String,
+    required: true,
+    unique: true, // 중복되지 않아야 함
+    match: /^[a-zA-Z0-9]+$/, // 영어 또는 숫자로만 구성
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  level: {
+    type: Number,
+    default: 1,
+  },
+  point: {
+    type: Number,
+    default: 1000,
+  },
+  nickname: {
+    type: String,
+    required: true,
+    unique: true, // 중복되지 않아야 함
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true, // 중복되지 않아야 함
+    match: /^\S+@\S+\.\S+$/, // 이메일 주소 형식
+  },
+  admin:{
+    type:Number,
+    default:0
+  }
+});
+
+// 중복 검사를 수행하기 위한 플러그인 추가
+userSchema.plugin(uniqueValidator);
+
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;
+```
 
 
 
